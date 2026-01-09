@@ -6,135 +6,173 @@ import Image from "next/image";
 import { useUser } from "@/app/context/UserContext";
 import Link from "next/link";
 import Cookies from "js-cookie";
+
 export default function LoginForm() {
-  const router = useRouter();
-  const { setUser } = useUser();
+    const router = useRouter();
+    const { setUser } = useUser();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError("");
 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(formData),
+            });
 
-      const data = await res.json();
+            // Get the response text first
+            const text = await res.text();
+            console.log("Response status:", res.status);
+            console.log("Response headers:", Object.fromEntries(res.headers.entries()));
+            console.log("Response text:", text);
 
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-      } else {
-  
+            // Handle non-200 responses
+            if (!res.ok) {
+                // Try to parse error as JSON
+                let errorMessage = "Login failed";
+                try {
+                    const errorData = JSON.parse(text);
+                    errorMessage = errorData.message || errorData.error || errorMessage;
+                } catch {
+                    // If not JSON, use status text or raw text
+                    errorMessage = text.substring(0, 100) || res.statusText || `Server error (${res.status})`;
+                }
+                setError(errorMessage);
+                return;
+            }
 
-      
+            // Try to parse successful response as JSON
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (parseError) {
+                console.error("Failed to parse JSON:", text);
+                setError("Invalid response from server. Please contact support.");
+                return;
+            }
 
-        Cookies.set("token", data.data.token, { expires: 7, path: "/" });
-        Cookies.set("user", JSON.stringify(data.data.user), {
-          expires: 7,
-          path: "/",
-        });
+            // Verify the expected data structure
+            if (!data.data?.token || !data.data?.user) {
+                console.error("Unexpected response structure:", data);
+                setError("Invalid login response. Please try again.");
+                return;
+            }
 
-        setUser(data.data.user);
-        router.push("/dashboard/Countries");
-      }
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-      console.error("Login error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+            // Store token and user data
+            Cookies.set("token", data.data.token, { expires: 7, path: "/" });
+            Cookies.set("user", JSON.stringify(data.data.user), {
+                expires: 7,
+                path: "/",
+            });
 
-  return (
-    <div className="w-full max-w-2xl mx-auto border overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-      <div className="px-12 py-10">
-        <div className="flex justify-center mx-auto">
-          <Image className="w-auto h-7 sm:h-8" src={logo} alt="Logo" />
-        </div>
+            setUser(data.data.user);
+            router.push("/dashboard/Countries");
 
-        <h3 className="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
-          Welcome Back
-        </h3>
-        <p className="mt-1 text-center text-gray-500 dark:text-gray-400">
-          Login Here
-        </p>
+        } catch (err) {
+            console.error("Login error:", err);
 
-        {error && (
-          <p className="mt-2 text-sm text-red-500 text-center">{error}</p>
-        )}
+            // Differentiate between network errors and other errors
+            if (err instanceof TypeError && err.message.includes('fetch')) {
+                setError("Network error. Please check your connection.");
+            } else {
+                setError("Something went wrong. Please try again.");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+    return (
+        <div className="w-full max-w-2xl mx-auto border overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div className="px-12 py-10">
+                <div className="flex justify-center mx-auto">
+                    <Image className="w-auto h-7 sm:h-8" src={logo} alt="Logo" />
+                </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="w-full mt-4">
-            <input
-              name="email"
-              type="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
+                <h3 className="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">
+                    Welcome Back
+                </h3>
+                <p className="mt-1 text-center text-gray-500 dark:text-gray-400">
+                    Login Here
+                </p>
 
-          <div className="w-full mt-4">
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
+                {error && (
+                    <p className="mt-2 text-sm text-red-500 text-center">{error}</p>
+                )}
 
-          <div className="flex items-center justify-end mt-4">
-            <Link
-              href="forgot-password"
-              className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
-            >
-              Forget Password?
-            </Link>
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-2 w-full mt-4 cursor-pointer text-sm font-medium text-white bg-[#0A1532] rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-          >
-            {loading ? "Signing In..." : "Sign In"}
-          </button>
-        </form>
-      </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="w-full mt-4">
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Email Address"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300"
+                        />
+                    </div>
 
-      <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
+                    <div className="w-full mt-4">
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300"
+                        />
+                    </div>
+
+                    <div className="flex items-center justify-end mt-4">
+                        <Link
+                            href="forgot-password"
+                            className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500"
+                        >
+                            Forget Password?
+                        </Link>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="px-6 py-2 w-full mt-4 cursor-pointer text-sm font-medium text-white bg-[#0A1532] rounded-lg focus:outline-none focus:ring focus:ring-blue-300 disabled:opacity-50"
+                    >
+                        {loading ? "Signing In..." : "Sign In"}
+                    </button>
+                </form>
+            </div>
+
+            <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
         <span className="text-sm text-gray-600 dark:text-gray-200">
-          Dont have an account?
+          Don't have an account?
         </span>
-        <a
-          href="register"
-          className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline"
-        >
-          Register
-        </a>
-      </div>
-    </div>
-  );
+                <a
+                    href="register"
+                    className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline"
+                >
+                    Register
+                </a>
+            </div>
+        </div>
+    );
 }

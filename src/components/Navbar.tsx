@@ -20,11 +20,11 @@ const Navbar = () => {
   const { user } = useUser();
 
   return (
-    <nav className="bg-white shadow  py-7 px-4">
+    <nav className="bg-[#0A1532] shadow  py-2 px-4">
       <div className=" container mx-auto flex items-center justify-between">
         {/* Left: Logo */}
 
-        
+
 
         <div className="flex items-center">
           <Link href={"/"}>
@@ -72,31 +72,31 @@ const Navbar = () => {
         <div className="hidden lg:flex space-x-12">
           <Link
             href="/"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold "
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold "
           >
             Home
           </Link>
           <Link
             href="/about"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold"
           >
             About
           </Link>
           <Link
             href="/pricing"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold"
           >
             Pricing
           </Link>
           <Link
             href="/articles"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold"
           >
             Articles
           </Link>
           <Link
             href="/Contact"
-            className="block text-[#000929]  hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff]  hover:text-[#3BA1DF] font-semibold"
           >
             Contact
           </Link>
@@ -136,7 +136,7 @@ const Navbar = () => {
           <div className="space-x-4 lg:flex hidden ">
             <Link
               href={"/auth/login"}
-              className="px-6 py-4 rounded-lg border-2 border-[#E0DEF7] text-[#0A1532] font-semibold"
+              className="px-6 py-4 rounded-lg border-2 border-[#E0DEF7] text-white font-semibold"
             >
               Login
             </Link>
@@ -155,31 +155,31 @@ const Navbar = () => {
         <div className="lg:hidden mt-4 space-y-2 ">
           <Link
             href="/"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold "
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold "
           >
             Home
           </Link>
           <Link
             href="/about"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold"
           >
             About
           </Link>
           <Link
             href="/pricing"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold"
           >
             Pricing
           </Link>
           <Link
             href="/articles"
-            className="block text-[#000929] hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff] hover:text-[#3BA1DF] font-semibold"
           >
             Articles
           </Link>
           <Link
             href="/Contact"
-            className="block text-[#000929]  hover:text-[#3BA1DF] font-semibold"
+            className="block text-[#ffff]  hover:text-[#3BA1DF] font-semibold"
           >
             Contact
           </Link>

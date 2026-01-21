@@ -1124,29 +1124,7 @@ const Hero = () => {
                                             
                                             
                                             <g>
-                                            <circle
-  cx="58"
-  cy="42"
-  r="1.5"
-  fill="none"
-  stroke="#3ba1df"
-  strokeWidth="0.1"
-  opacity="0.6"
->
-  <animate
-    attributeName="r"
-    values="1.5;2.5;1.5"
-    dur="2s"
-    repeatCount="indefinite"
-  />
-  <animate
-    attributeName="opacity"
-    values="0.6;0.2;0.6"
-    dur="2s"
-    repeatCount="indefinite"
-  />
-</circle>
-
+                                                <circle cx="58" cy="42" r="2.5" fill="none" stroke="#3ba1df" strokeWidth="0.1" opacity="0.4" className="animate-ping" style={{ transformOrigin: '58% 42%' }}></circle>
 
                                                         <circle cx="58" cy="42" r="1.8" fill="#3ba1df" opacity="0.15"></circle>
                                                         <circle cx="58" cy="42" r="1.2" fill="#3ba1df" opacity="0.4"></circle>

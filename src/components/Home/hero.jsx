@@ -1145,6 +1145,10 @@ const Hero = () => {
 
                         {/* City data cards - positioned absolutely */}
 
+
+                       
+
+
                         {/* London Card */}
                         <div className="absolute" style={{ left: '23%', top: '20%' }}>
                             <DataCard

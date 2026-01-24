@@ -1,9 +1,9 @@
 "use client";
+
 import Image from "next/image";
 import React, { useState } from "react";
-import logo from "../../public/logo.png";
-import man from "../../public/man1.png";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -15,54 +15,69 @@ import {
 import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
 import { useUser } from "@/app/context/UserContext";
+import man from "../../public/man1.png";
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const { user } = useUser();
+    const pathname = usePathname();
+
+    // Desktop active link class
+    const navLinkClass = (path) =>
+        pathname === path
+            ? "text-[#389EAC] font-semibold"
+            : "text-primary-foreground/80 hover:text-primary-foreground";
+
+    // Mobile active link class
+    const mobileNavClass = (path) =>
+        pathname === path
+            ? "text-[#3BA1DF] font-bold"
+            : "text-white hover:text-[#3BA1DF]";
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A1532]  backdrop-blur-sm transition-all duration-300">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A1532] backdrop-blur-sm">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between py-4">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-lg bg-sky text-primary font-bold text-lg md:text-xl">
+                        <div className="flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-lg bg-sky text-primary font-bold text-lg">
                             EA
                         </div>
-                        <span className="text-xl md:text-2xl font-bold text-white tracking-tight">
-              EstateAtlas
-            </span>
+                        <span className="text-xl md:text-2xl font-bold text-white">
+                            EstateAtlas
+                        </span>
                     </Link>
 
                     {/* Desktop Nav */}
                     <div className="hidden lg:flex items-center gap-8">
-                        <Link
-                            href="/"
-                            className="transition-colors font-medium text-sm text-[#389EAC] hover:text-[#389EAC]"
-                        >
+                        <Link href="/" className={`transition-colors text-sm ${navLinkClass("/")}`}>
                             Home
                         </Link>
+
                         <Link
                             href="/about"
-                            className="transition-colors font-medium text-sm text-primary-foreground/80 hover:text-primary-foreground"
+                            className={`transition-colors text-sm ${navLinkClass("/about")}`}
                         >
                             About
                         </Link>
+
                         <Link
                             href="/pricing"
-                            className="transition-colors font-medium text-sm text-primary-foreground/80 hover:text-primary-foreground"
+                            className={`transition-colors text-sm ${navLinkClass("/pricing")}`}
                         >
                             Pricing
                         </Link>
+
                         <Link
                             href="/articles"
-                            className="transition-colors font-medium text-sm text-primary-foreground/80 hover:text-primary-foreground"
+                            className={`transition-colors text-sm ${navLinkClass("/articles")}`}
                         >
                             Market Insights
                         </Link>
+
                         <Link
                             href="/contact"
-                            className="transition-colors font-medium text-sm text-primary-foreground/80 hover:text-primary-foreground"
+                            className={`transition-colors text-sm ${navLinkClass("/contact")}`}
                         >
                             Contact
                         </Link>
@@ -71,20 +86,17 @@ const Navbar = () => {
                         {user ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        className="flex items-center gap-2 px-2 py-1 h-auto"
-                                    >
+                                    <Button variant="ghost" className="flex items-center gap-2">
                                         <div className="relative h-10 w-10 rounded-full overflow-hidden">
                                             <Image
                                                 src={man}
                                                 alt="User Avatar"
-                                                width={50}
-                                                height={50}
+                                                width={40}
+                                                height={40}
                                                 className="object-cover"
                                             />
                                         </div>
-                                        <ChevronDown className="h-4 w-4 text-gray-500" />
+                                        <ChevronDown className="h-4 w-4 text-gray-400" />
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end" className="w-56">
@@ -96,14 +108,12 @@ const Navbar = () => {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
-                            <div className="flex items-center gap-3 ml-4">
+                            <div className="flex items-center gap-3">
                                 <Link href="/auth/login">
-                                    <Button className="h-10 px-4 py-2 text-primary-foreground bg-transparent border border-transparent hover:border-primary-foreground/50 hover:bg-transparent">
-                                        Log In
-                                    </Button>
+                                    <Button variant="ghost">Log In</Button>
                                 </Link>
                                 <Link href="/auth/register">
-                                    <Button className="h-10 px-6 py-2 bg-[#379BCD] hover:bg-[#379BCD] text-primary font-semibold">
+                                    <Button className="bg-[#379BCD] hover:bg-[#379BCD]">
                                         Get Started
                                     </Button>
                                 </Link>
@@ -111,87 +121,45 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Mobile Menu Button */}
+                    {/* Mobile Toggle */}
                     <button
-                        className="lg:hidden text-white p-2"
+                        className="lg:hidden text-white"
                         onClick={() => setMenuOpen(!menuOpen)}
-                        aria-label="Toggle menu"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            {menuOpen ? (
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            ) : (
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            )}
-                        </svg>
+                        ☰
                     </button>
                 </div>
 
                 {/* Mobile Menu */}
                 {menuOpen && (
-                    <div className="lg:hidden mt-4 space-y-2">
-                        <Link
-                            href="/"
-                            className="block text-white hover:text-[#3BA1DF] font-semibold"
-                        >
+                    <div className="lg:hidden space-y-2 pb-4">
+                        <Link href="/" className={`block font-semibold ${mobileNavClass("/")}`}>
                             Home
                         </Link>
                         <Link
                             href="/about"
-                            className="block text-white hover:text-[#3BA1DF] font-semibold"
+                            className={`block font-semibold ${mobileNavClass("/about")}`}
                         >
                             About
                         </Link>
                         <Link
                             href="/pricing"
-                            className="block text-white hover:text-[#3BA1DF] font-semibold"
+                            className={`block font-semibold ${mobileNavClass("/pricing")}`}
                         >
                             Pricing
                         </Link>
                         <Link
                             href="/articles"
-                            className="block text-white hover:text-[#3BA1DF] font-semibold"
+                            className={`block font-semibold ${mobileNavClass("/articles")}`}
                         >
                             Market Insights
                         </Link>
                         <Link
                             href="/contact"
-                            className="block text-white hover:text-[#3BA1DF] font-semibold"
+                            className={`block font-semibold ${mobileNavClass("/contact")}`}
                         >
                             Contact
                         </Link>
-                        {!user && (
-                            <div className="flex gap-2 mt-2">
-                                <Link
-                                    href="/auth/login"
-                                    className="flex-1 px-4 py-2 rounded-lg border-2 border-[#E0DEF7] text-[#0A1532] font-semibold text-center"
-                                >
-                                    Login
-                                </Link>
-                                <Link
-                                    href="/auth/register"
-                                    className="flex-1 px-4 py-2 rounded-lg bg-[#0A1532] text-white text-center"
-                                >
-                                    Sign Up
-                                </Link>
-                            </div>
-                        )}
                     </div>
                 )}
             </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -17,20 +17,32 @@ import { ChevronDown } from "lucide-react";
 import { useUser } from "@/app/context/UserContext";
 import man from "../../public/man1.png";
 
-const Navbar = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
+const Navbar: React.FC = () => {
+    const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const { user } = useUser();
-    const pathname = usePathname();
+    const pathname: string = usePathname();
 
-    // Desktop active link class
-    const navLinkClass = (path) =>
-        pathname === path
+    /**
+     * Check active route
+     */
+    const isActive = (path: string): boolean => {
+        if (path === "/") return pathname === "/";
+        return pathname.startsWith(path);
+    };
+
+    /**
+     * Desktop nav class
+     */
+    const navLinkClass = (path: string): string =>
+        isActive(path)
             ? "text-[#389EAC] font-semibold"
             : "text-primary-foreground/80 hover:text-primary-foreground";
 
-    // Mobile active link class
-    const mobileNavClass = (path) =>
-        pathname === path
+    /**
+     * Mobile nav class
+     */
+    const mobileNavClass = (path: string): string =>
+        isActive(path)
             ? "text-[#3BA1DF] font-bold"
             : "text-white hover:text-[#3BA1DF]";
 
@@ -48,7 +60,7 @@ const Navbar = () => {
                         </span>
                     </Link>
 
-                    {/* Desktop Nav */}
+                    {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center gap-8">
                         <Link href="/" className={`transition-colors text-sm ${navLinkClass("/")}`}>
                             Home
@@ -82,7 +94,7 @@ const Navbar = () => {
                             Contact
                         </Link>
 
-                        {/* Right Buttons */}
+                        {/* Auth Section */}
                         {user ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -99,6 +111,7 @@ const Navbar = () => {
                                         <ChevronDown className="h-4 w-4 text-gray-400" />
                                     </Button>
                                 </DropdownMenuTrigger>
+
                                 <DropdownMenuContent align="end" className="w-56">
                                     <DropdownMenuLabel>{user.first_name}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
@@ -124,13 +137,14 @@ const Navbar = () => {
                     {/* Mobile Toggle */}
                     <button
                         className="lg:hidden text-white"
-                        onClick={() => setMenuOpen(!menuOpen)}
+                        onClick={() => setMenuOpen((prev) => !prev)}
+                        aria-label="Toggle menu"
                     >
                         ☰
                     </button>
                 </div>
 
-                {/* Mobile Menu */}
+                {/* Mobile Navigation */}
                 {menuOpen && (
                     <div className="lg:hidden space-y-2 pb-4">
                         <Link href="/" className={`block font-semibold ${mobileNavClass("/")}`}>

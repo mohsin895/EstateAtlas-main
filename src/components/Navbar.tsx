@@ -123,7 +123,7 @@ const Navbar: React.FC = () => {
                         ) : (
                             <div className="flex items-center gap-3">
                                 <Link href="/auth/login">
-                                    <Button variant="ghost">Log In</Button>
+                                    <Button variant="ghost" className="text-white">Log In</Button>
                                 </Link>
                                 <Link href="/auth/register">
                                     <Button className="bg-[#379BCD] hover:bg-[#379BCD]">

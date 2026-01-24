@@ -70,41 +70,109 @@ const Articles = () => {
     <section>
       <Navbar />
 
-      <div className="min-h-screen mb-5  px-5">
-        <div className="mx-auto container">
-          <h1 className="md:text-6xl text-4xl mt-20 text-center font-semibold leading-relaxed md:leading-[5rem]">
-            Insights & Trends for Global Real <br /> Estate Professionals
-          </h1>
-          <p className="mt-6 text-xl text-center text-[#80838A] leading-loose">
-            Access global real estate insights tailored to your needs. No hidden
-            fees, cancel anytime.
-          </p>
-
-          {/* 🔍 Search Bar */}
-          <div className="flex justify-center mt-10 w-11/12 mx-auto">
-            <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-          </div>
-
-          {/* Banner */}
-          <div className="relative mt-10 w-11/12 mx-auto px-4 md:px-10 py-10 md:py-20 rounded-2xl overflow-hidden">
-            <Image src={abanner} alt="Article Banner" fill className="object-cover" priority />
-            <div className="absolute inset-0 bg-black/30" />
-            <div className="relative z-10 flex h-full items-center">
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl">
-                  <div className="mb-6">
-                    <span className="inline-block rounded-md bg-slate-800/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm">
-                      Rental Yields
-                    </span>
-                  </div>
-                  <h1 className="mb-6 text-2xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
-                    Gross rental yields in Mauritius — Transparent Analytics and Market Trends
+      <div className="min-h-screen mb-5  ">
+          <section className="bg-[#0a1532] pt-32 pb-16 ">
+              <div className="container mx-auto text-center">
+                  {/* Heading */}
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-balance">
+                      Global Market Intelligence
                   </h1>
-                  <p className="text-lg text-white/90 sm:text-xl">March 10, 2025</p>
-                </div>
+
+                  {/* Subheading */}
+                  <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-10">
+                      Analysis, regulatory updates, and yield forecasts from our data team.
+                  </p>
+
+                  {/* Search Bar */}
+                  <div className="max-w-2xl mx-auto relative">
+                      {/* Background glow / border */}
+                      <div className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-full border border-white/20" />
+
+                      {/* Input wrapper */}
+                      <div className="relative flex items-center">
+                          {/* Search icon */}
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="absolute left-5 h-5 w-5 text-white/60"
+                          >
+                              <circle cx="11" cy="11" r="8" />
+                              <path d="m21 21-4.3-4.3" />
+                          </svg>
+
+                          {/* Input field */}
+                          <input
+                              type="text"
+                              placeholder="Search insights, reports, and analysis..."
+                              className="w-full py-4 pl-14 pr-6 bg-transparent text-white placeholder:text-white/50 focus:outline-none rounded-full"
+                          />
+                      </div>
+                  </div>
               </div>
-            </div>
-          </div>
+          </section>
+          <section className="bg-[#0d1a3d] border-b border-white/10 sticky top-[72px] z-40">
+              <div className="container mx-auto px-4 py-4">
+                  <div className="flex flex-wrap justify-center gap-3">
+                      <button className="px-5 py-2 rounded-full text-sm font-medium transition-all bg-[#3CABDD] text-primary">
+                          All Insights
+                      </button>
+                      <button className="px-5 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20 hover:text-white">
+                          Market Reports
+                      </button>
+                      <button className="px-5 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20 hover:text-white">
+                          Regulatory Alerts
+                      </button>
+                      <button className="px-5 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20 hover:text-white">
+                          Investment Strategy
+                      </button>
+                      <button className="px-5 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20 hover:text-white">
+                          Case Studies
+                      </button>
+                  </div>
+              </div>
+          </section>
+          <section className="py-12 md:py-16 px-4 bg-muted/30">
+              <div className="container mx-auto">
+                  <div className="bg-card rounded-2xl overflow-hidden shadow-xl border border-border">
+                      <div className="grid md:grid-cols-2">
+                          <div className="aspect-video md:aspect-auto">
+                              <img
+                                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80"
+                                  alt="Emerging Yield Hotspots: Why Southeast Asia is Beating Europe"
+                                  className="w-full h-full object-cover"
+                              />
+                          </div>
+                          <div className="p-8 md:p-12 flex flex-col justify-center">
+          <span className="inline-block px-3 py-1 bg-sky text-primary text-xs font-bold rounded-full mb-4 w-fit">
+            Q3 2026 REPORT
+          </span>
+                              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 leading-tight">
+                                  Emerging Yield Hotspots: Why Southeast Asia is Beating Europe
+                              </h2>
+                              <p className="text-muted-foreground text-base md:text-lg mb-6 leading-relaxed">
+                                  Our latest data shows a 15% shift in capital flow towards Vietnam and Thailand, driven by favorable demographics and regulatory reforms...
+                              </p>
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <span className="font-medium text-foreground">By Sarah Jenks, Chief Analyst</span>
+                                  <span>•</span>
+                                  <span>5 min read</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+
+
+          <div className="mx-auto container">
 
           {/* Display Posts */}
           <div className="mt-10">

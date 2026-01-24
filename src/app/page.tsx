@@ -1,9 +1,11 @@
 import Footer from "@/components/Footer";
 import Hero from "@/components/Home/Hero";
-import MarketInsight from "@/components/Home/MarketInsight";
-import Testimonial from "@/components/Home/Testimonial";
+
 import WhyChoose from "@/components/Home/WhyChoose";
 import Navbar from "@/components/Navbar";
+import WhyGlobal from "@/components/Home/WhyGlobal";
+import CountryComparator from "@/components/Home/CountryComparator";
+import MarketInsights from "@/components/Home/MarketInsights";
 
 
 export default function Home() {
@@ -15,9 +17,10 @@ export default function Home() {
      
       
         <WhyChoose/>
+        <WhyGlobal />
+    <CountryComparator />
+        <MarketInsights />
 
-        <Testimonial/>
-        <MarketInsight/>
 
         <Footer/>
 

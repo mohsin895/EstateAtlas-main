@@ -1,323 +1,290 @@
-
 "use client";
-import ToggleButton from "@/components/Pricing/ToggleButton";
-import React, { useState } from "react";
-import {
-  CircleCheck,
-  CreditCard,
-  Globe,
-  Headset,
-  Sparkles,
-} from "lucide-react";
-import Image from "next/image";
-import actionbg from "../../../public/actionbg.png";
-import FAQ from "@/components/Pricing/FAQ";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import { CircleCheck, CreditCard, Globe, Headset, Sparkles } from "lucide-react";
+
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import FAQ from "@/components/Pricing/FAQ";
+import actionbg from "../../../public/actionbg.png";
+
 const Pricing = () => {
+    const router = useRouter();
+    const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
 
-   const router = useRouter();
-
-   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
-   const handleClick = (plan: "basic" | "premium") => {
-    router.push(`auth/subscribe?plan=${plan}&isYearly=${billingCycle === "yearly"}`);
-  };
-  
- 
- const getPrices = () => {
-    const prices = {
-      professional: {
-        monthly: 29,
-        yearly: 24,
-      },
-      enterprise: {
-        monthly: 49,
-        yearly: 44,
-      },
+    const handleClick = (plan: "basic" | "premium" | "enterprise") => {
+        router.push(`/auth/subscribe?plan=${plan}&isYearly=${billingCycle === "yearly"}`);
     };
 
-    return {
-      professionalPrice: prices.professional[billingCycle],
-      enterprisePrice: prices.enterprise[billingCycle],
-      note: billingCycle === "yearly" ? "Special yearly price" : "Billed monthly",
+    const getPrices = () => {
+        const prices = {
+            professional: { monthly: 29, yearly: 290 },
+            premium: { monthly: 49, yearly: 490 },
+        };
+        return {
+            professionalPrice: prices.professional[billingCycle],
+            premiumPrice: prices.premium[billingCycle],
+        };
     };
-  };
 
-  const { professionalPrice, enterprisePrice,  } = getPrices();
-  // const handlesubscription1 =  () => {
-  //   router.push('/auth/register')
-  // }
-  return (
-    <div>
-      <Navbar />
-      {/* Pricing hero section */}
-      <div className="md:container mx-auto md:mb-20 mb-7 md:p-8 p-2 text-[#0A1532] text-center">
-        <h1 className="md:text-6xl text-4xl mt-20 text-center font-semibold leading-relaxed md:leading-[5rem]">
-          Simple, Transparent Pricing To <br /> Unlock Global Real Estate
-          Insights
-        </h1>
-        <p className="mt-6 text-xl md:text-xl text-center text-[#80838A] leading-loose">
-          Access global real estate insights tailored to your needs. No hidden
-          fees, cancel anytime.
-        </p>
+    const { professionalPrice, premiumPrice } = getPrices();
 
-        <div className="flex justify-center mt-10">
-              <ToggleButton selected={billingCycle} onChange={setBillingCycle} />
+    return (
+        <div>
+            <Navbar />
+
+            {/* Hero Section */}
+            <section className="bg-[#0A1532] pt-28 pb-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                        Transparent Pricing for Global Investors
+                    </h1>
+                    <p className="text-xl text-white max-w-2xl mx-auto mb-8">
+                        Choose the data depth that matches your investment strategy.
+                    </p>
+
+                    {/* Toggle */}
+                    <div className="flex items-center justify-center gap-3 mb-12">
+                        <span className="text-sm font-medium text-white">Monthly</span>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")
+                            }
+                            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors
+                ${billingCycle === "monthly" ? "bg-input" : "bg-[#3CABDD]"}`}
+                        >
+              <span
+                  className={`pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg transform transition-transform ${
+                      billingCycle === "monthly" ? "translate-x-0" : "translate-x-5"
+                  }`}
+              ></span>
+                        </button>
+                        <span className="text-sm font-medium text-white">Yearly</span>
+                    </div>
+                </div>
+            </section>
+
+            {/* Pricing Cards */}
+            <section className="py-16 -mt-8">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
+                        {/* Professional Card */}
+                        <div className="rounded-lg border bg-card text-card-foreground relative flex flex-col border-border shadow-md">
+                            <div className="flex flex-col space-y-1.5 p-6 text-center pt-6">
+                                <h3 className="tracking-tight text-2xl font-bold text-foreground">Professional</h3>
+                                <p className="text-sm text-muted-foreground mt-2">
+                                    Individual investors & digital nomads.
+                                </p>
+                            </div>
+                            <div className="p-6 pt-0 flex-1">
+                                <div className="text-center mb-6">
+                  <span className="text-4xl font-bold text-foreground">
+                    ${professionalPrice}
+                  </span>
+                                    <span className="text-muted-foreground">/month</span>
+                                </div>
+                                <ul className="space-y-3">
+                                    {["Global Market Analysis", "Rental Yield Data", "Standard Support"].map(
+                                        (item, idx) => (
+                                            <li key={idx} className="flex items-start gap-3">
+                                                <CircleCheck className="w-5 h-5 text-[#3CABDD] mt-0.5" />
+                                                <span className="text-sm text-foreground">{item}</span>
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
+                            </div>
+                            <div className="flex items-center p-6 pt-4">
+                                <button
+                                    onClick={() => handleClick("basic")}
+                                    className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 w-full border bg-background text-[#0A1532] hover:text-[#3CABDD] hover:bg-[#0A1532]/5 transition"
+                                >
+                                    Get Started
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Premium Card */}
+                        <div className="rounded-lg bg-card text-card-foreground relative flex flex-col border-[#3CABDD] border-2 shadow-xl scale-105 z-10">
+                            <div className="inline-flex items-center rounded-full border text-xs font-semibold absolute -top-3 left-1/2 -translate-x-1/2 bg-[#3CABDD] text-white px-4 py-1">
+                                MOST POPULAR
+                            </div>
+                            <div className="flex flex-col space-y-1.5 p-6 text-center pt-8">
+                                <h3 className="tracking-tight text-2xl font-bold text-foreground">Premium</h3>
+                                <p className="text-sm text-muted-foreground mt-2">
+                                    Serious buyers requiring deep diligence.
+                                </p>
+                            </div>
+                            <div className="p-6 pt-0 flex-1">
+                                <div className="text-center mb-6">
+                                    <span className="text-4xl font-bold text-foreground">${premiumPrice}</span>
+                                    <span className="text-muted-foreground">/month</span>
+                                </div>
+                                <ul className="space-y-3">
+                                    {[
+                                        "Everything in Professional +",
+                                        "Full Historical Data (10-Year)",
+                                        "Neighborhood Heat Maps",
+                                        "Investment Calculator (Smart Fill)",
+                                        "Priority Support (<12 Hours)",
+                                        "Unlimited Watchlist",
+                                    ].map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-3">
+                                            <CircleCheck className="w-5 h-5 text-[#3CABDD] mt-0.5" />
+                                            <span className="text-sm text-foreground">{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="flex items-center p-6 pt-4">
+                                <button
+                                    onClick={() => handleClick("premium")}
+                                    className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 w-full bg-[#0A1532] text-white hover:bg-[#0A1532]/90 transition"
+                                >
+                                    Start Premium Trial
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Enterprise / Custom Card */}
+                        <div className="rounded-lg border bg-card text-card-foreground relative flex flex-col border-border shadow-md">
+                            <div className="flex flex-col space-y-1.5 p-6 text-center pt-6">
+                                <h3 className="tracking-tight text-2xl font-bold text-foreground">API & Enterprise</h3>
+                                <p className="text-sm text-muted-foreground mt-2">Funds, PropTechs & Agencies.</p>
+                            </div>
+                            <div className="p-6 pt-0 flex-1">
+                                <div className="text-center mb-6">
+                                    <span className="text-4xl font-bold text-foreground">Custom</span>
+                                </div>
+                                <ul className="space-y-3">
+                                    {[
+                                        "Everything in Premium +",
+                                        "Commercial Usage License",
+                                        "JSON API Access",
+                                        "Team Seats (5+ Users)",
+                                        "Dedicated Account Manager",
+                                        "Invoicing & POs",
+                                    ].map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-3">
+                                            <CircleCheck className="w-5 h-5 text-[#3CABDD] mt-0.5" />
+                                            <span className="text-sm text-foreground">{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="flex items-center p-6 pt-4">
+                                <button
+                                    onClick={() => handleClick("enterprise")}
+                                    className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 w-full bg-background text-[#0A1532] hover:text-[#3CABDD] hover:bg-[#0A1532]/5 transition"
+                                >
+                                    Contact Sales
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="py-16 bg-muted/30">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center text-foreground mb-8">
+                        Compare Plans
+                    </h2>
+                    <div className="max-w-5xl mx-auto bg-card rounded-xl shadow-md overflow-hidden">
+                        <div className="relative w-full overflow-auto">
+                            <table className="w-full caption-bottom text-sm">
+                                <thead className="[&_tr]:border-b">
+                                <tr className="border-b transition-colors hover:bg-muted/50 bg-[#0A1532]">
+                                    <th className="h-12 px-4 text-left align-middle text-white font-semibold w-1/3">
+                                        Feature
+                                    </th>
+                                    <th className="h-12 px-4 align-middle text-white font-semibold text-center">
+                                        Professional
+                                    </th>
+                                    <th className="h-12 px-4 align-middle text-white font-semibold text-center">
+                                        Premium
+                                    </th>
+                                    <th className="h-12 px-4 align-middle text-white font-semibold text-center">
+                                        API
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody className="[&_tr:last-child]:border-0">
+                                {[
+                                    { name: "Global Market Analysis", pro: true, premium: true, api: true },
+                                    { name: "Rental Yield Data", pro: true, premium: true, api: true },
+                                    { name: "Standard Support", pro: true, premium: true, api: true },
+                                    { name: "Full Historical Data (10-Year)", pro: false, premium: true, api: true },
+                                    { name: "Neighborhood Heat Maps", pro: false, premium: true, api: true },
+                                    { name: "Investment Calculator (Smart Fill)", pro: false, premium: true, api: true },
+                                    { name: "Priority Support (<12 Hours)", pro: false, premium: true, api: true },
+                                    { name: "Unlimited Watchlist", pro: false, premium: true, api: true },
+                                    { name: "Commercial Usage License", pro: false, premium: false, api: true },
+                                    { name: "JSON API Access", pro: false, premium: false, api: true },
+                                    { name: "Team Seats (5+ Users)", pro: false, premium: false, api: true },
+                                    { name: "Dedicated Account Manager", pro: false, premium: false, api: true },
+                                    { name: "Invoicing & POs", pro: false, premium: false, api: true },
+                                ].map((row, index) => {
+                                    const bg = index % 2 === 0 ? "bg-card" : "bg-muted/20";
+                                    const renderIcon = (value: boolean) =>
+                                        value ? (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="lucide lucide-check w-5 h-5 text-[#3CABDD] mx-auto"
+                                            >
+                                                <path d="M20 6 9 17l-5-5" />
+                                            </svg>
+                                        ) : (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="lucide lucide-x w-5 h-5 text-muted-foreground/40 mx-auto"
+                                            >
+                                                <path d="M18 6 6 18" />
+                                                <path d="M6 6 18 18" />
+                                            </svg>
+                                        );
+
+                                    return (
+                                        <tr key={index} className={`border-b transition-colors hover:bg-muted/50 ${bg}`}>
+                                            <td className="p-4 align-middle font-medium text-foreground">{row.name}</td>
+                                            <td className="p-4 align-middle text-center">{renderIcon(row.pro)}</td>
+                                            <td className="p-4 align-middle text-center">{renderIcon(row.premium)}</td>
+                                            <td className="p-4 align-middle text-center">{renderIcon(row.api)}</td>
+                                        </tr>
+                                    );
+                                })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* Action / CTA Section */}
+
+
+            {/* FAQ */}
+            <FAQ />
+
+            <Footer />
         </div>
-
-        <div
-          className="absolute top-40 -left-40 w-[500px] h-[500px] rounded-full z-0 pointer-events-none blur-xl opacity-40"
-          style={{
-            background:
-              "radial-gradient(circle at center, rgba(10, 21, 50, 0.5) 0%, rgba(10, 21, 50, 0.2) 60%, rgba(255, 255, 255, 0) 100%)",
-          }}
-        ></div>
-
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-8 mt-20 mb-10 mx-auto">
-          <div className="flex items-end">
-            {/* Basic Plan */}
-            <div className="relative bg-white p-8 rounded-lg border border-[#0A1532] w-full mx-auto">
-              <div className="absolute top-4 right-4 bg-[#3BA1DF] text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide shadow-lg">
-                Best Plan
-              </div>
-
-              <div className="flex flex-col items-start mb-6">
-                <h2 className="text-2xl text-center md:text-left font-bold text-[#0A1532] mb-1">
-                  Professional Tier
-                </h2>
-                <h4 className="text-gray-600 text-center md:text-left">For Individual Analysts</h4>
-              </div>
-
-              <div className="mb-6">
-                <p className="text-3xl font-bold text-[#0A1532] mb-2">
-                 ${professionalPrice}/month
-                </p>
-                <p className={`text-gray-500 text-sm ${billingCycle === "monthly" ? "invisible" : ""}`}>
-                  Billed as $288 annually
-                </p>
-              </div>
-
-              <button onClick={() => handleClick("basic")} className="bg-[#0A1532] cursor-pointer text-white w-full py-3 rounded-lg text-center font-medium transition hover:bg-[#0d1d45]">
-  Get Started
-</button>
-
-
-              <ul className="text-left space-y-3 mt-6 text-gray-700">
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Global Market Analysis
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Rental Yield Data
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Average Price per Square Meter
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Property Tax Information
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Downloadable Country-Level Datasets
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Quarterly Market Updates
-                </li>
-              </ul>
-            </div>
-          </div>
-          {/* Pro Plan */}
-          <div>
-            <div className="relative bg-[#0A1532] p-8 rounded-lg border border-[#0A1532] w-full mx-auto min-h-[550px]">
-              <div className="flex flex-col md:items-start mb-6">
-                <h2 className="text-2xl font-bold text-center md:text-left text-white mb-1">
-                  Enterprise Tier
-                </h2>
-                <h4 className="text-white text-center md:text-left">
-                  Most Popular – For Teams & Professionals
-                </h4>
-              </div>
-
-              <div className="mb-6">
-                <p className="text-3xl font-bold text-white mb-2">  ${enterprisePrice}/month</p>
-                <p className={`text-white text-sm ${billingCycle === "monthly" ? "invisible" : ""}`}>
-                 Billed as $528 annually
-                </p>
-              </div>
-
-              <button onClick={() => handleClick("premium")} className="bg-white cursor-pointer text-[#0A1532] w-full py-3 rounded-lg text-center font-medium transition">
-  Get Started
-</button>
-
-
-              <ul className="text-left space-y-3 mt-6 text-white">
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Everything in Professional, plus:
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-              Advanced API Access
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-             Full Historical Data Downloads
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-               Market Trend Heat Maps
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-              Priority Support
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">
-                    <CircleCheck />
-                  </span>
-                  Team Access (Up to 5 seats)
-                </li>
-                
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* action btn */}
-
-        <section className=" my-30 ">
-          <div
-            className="relative  rounded-4xl text-white py-14 px-8 md:px-16 overflow-hidden"
-            style={{
-              background: "linear-gradient(90deg, #0A1532 0%, #121C3C 100%)",
-            }}
-          >
-            <div className="absolute inset-0 z-0 opacity-40">
-              <Image
-                src={actionbg}
-                alt="Action Background"
-                fill
-                className="object-cover object-[35%_center]"
-                priority
-              />
-            </div>
-
-            {/* Main Content */}
-            <div className="relative z-10 flex flex-col md:flex-row items-start justify-between gap-10">
-              <div className="">
-                <h2 className="text-4xl leading-relaxed md:leading-[4rem] md:text-5xl text-left font-bold mb-4">
-                  Still Unsure? Try <br /> EstateAtlas Risk-Free
-                </h2>
-                <Link href='/auth/register' className="mt-4 w-44 bg-white text-[#0A1532] font-semibold px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-gray-200 transition">
-                 Get Started{" "}
-                  <span>
-                    <Sparkles className="w-5 h-5 text-[#0A1532]" />
-                  </span>
-                </Link>
-              </div>
-
-              {/* Features */}
-              <div className="grid gap-4">
-                <div
-                  className="rounded-lg p-4 flex items-start gap-3 max-w-sm"
-                  style={{
-                    background:
-                      "linear-gradient(139.97deg, rgba(255, 255, 255, 0.08) 5.916%, rgba(255, 255, 255, 0.18) 90.97%)",
-                  }}
-                >
-                  <div className="bg-[#FFFFFF1A] rounded-xl p-3">
-                    <CreditCard />
-                  </div>
-
-                  <div className="text-left">
-                    <h4 className="font-bold text-white">
-                      Data Driven Accuracy
-                    </h4>
-                    <p className="text-sm text-gray-300">
-                      Audited data by trusted sources.
-                    </p>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    background:
-                      "linear-gradient(139.97deg, rgba(255, 255, 255, 0.08) 5.916%, rgba(255, 255, 255, 0.18) 90.97%)",
-                  }}
-                  className="rounded-lg p-4 flex items-start gap-3  max-w-sm"
-                >
-                  <div className="bg-[#FFFFFF1A] rounded-xl p-3 ">
-                    <Globe />
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold">Global Coverage</h4>
-                    <p className="text-sm text-gray-300">
-                      Access real-time insights across 100+ countries, from
-                      established markets.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    background:
-                      "linear-gradient(139.97deg, rgba(255, 255, 255, 0.08) 5.916%, rgba(255, 255, 255, 0.18) 90.97%)",
-                  }}
-                  className="rounded-lg p-4 flex items-start  max-w-sm gap-3"
-                >
-                  <div className="bg-[#FFFFFF1A] rounded-xl p-3 ">
-                    <Headset />
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold">Dedicated Support</h4>
-                    <p className="text-sm text-gray-300">
-                      Our team is here to assist you every step of the way
-                      during your analysis.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* faq section */}
-
-        <section className="mt-20">
-          <FAQ />
-        </section>
-      </div>
-      <Footer />
-    </div>
-  );
+    );
 };
 
 export default Pricing;

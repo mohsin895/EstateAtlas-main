@@ -1,4 +1,5 @@
-import ContactForm from "@/components/AffiliateContact/ContactForm";
+
+"use client";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import React from "react";
@@ -8,38 +9,124 @@ const Contact = () => {
    <section>
 
         <Navbar/>
-     <div className="min-h-screen  relative overflow-hidden mb-10">
-      <div className="md:container mx-auto  md:mb-20 mb-7 md:p-8 p-2 text-[#0A1532] text-center">
-        <h1 className="md:text-6xl text-4xl mt-20 text-center  font-semibold">
-          Reach Out <span className="text-[#3BA1DF]">–</span> To Our <br /> real estate experts
-        </h1>
-        <p className="mt-6 text-xl md:text-xl text-center text-[#80838A]">
-          Have questions specific markets, data insights, or custom solutions?
-          Our team is ready <br /> to assist you with any questions you may
-          have.
-        </p>
-      </div>
-      <div
-  className="absolute lg:flex hidden top-40 -left-40 w-[500px] h-[500px] rounded-full z-0 pointer-events-none blur-xl opacity-40"
-  style={{
-    background: "radial-gradient(circle at center, rgba(10, 21, 50, 0.5) 0%, rgba(10, 21, 50, 0.2) 60%, rgba(255, 255, 255, 0) 100%)",
-  }}
-></div>
+       <header className="bg-[#0A1532] pt-[112px] pb-16">
+           <div className="container mx-auto px-4 text-center">
+               <h1 className="text-4xl md:text-5xl font-heading text-primary-foreground mb-4 text-balance">
+                   Get in Touch
+               </h1>
+               <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto font-subhead">
+                   Have questions about our data or enterprise solutions? Our team is ready to help.
+               </p>
+           </div>
+       </header>
 
-<div
-  className="absolute lg:flex hidden top-40 -right-40 w-[500px] h-[500px] rounded-full z-0 pointer-events-none blur-xl opacity-40"
-  style={{
-    background: "radial-gradient(circle at center, rgba(59, 161, 223, 0.5) 0%, rgba(59, 161, 223, 0.2) 60%, rgba(255, 255, 255, 0) 100%)",
-  }}
-></div>
+       <section className="flex-1 bg-secondary py-16">
+           <div className="container mx-auto px-4">
+               <div className="rounded-lg bg-card text-card-foreground max-w-xl mx-auto shadow-lg">
+                   <div className="p-6">
+                       <form className="space-y-6">
 
-      
-{/* contact form */}
-   <ContactForm/>
+                           {/* Full Name */}
+                           <div className="space-y-2">
+                               <label
+                                   htmlFor="fullName"
+                                   className="text-sm font-medium text-foreground"
+                               >
+                                   Full Name
+                               </label>
+                               <input
+                                   id="fullName"
+                                   name="fullName"
+                                   placeholder="John Doe"
+                                   className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                               />
+                           </div>
 
-    </div>
+                           {/* Email */}
+                           <div className="space-y-2">
+                               <label
+                                   htmlFor="email"
+                                   className="text-sm font-medium text-foreground"
+                               >
+                                   Email Address
+                               </label>
+                               <input
+                                   type="email"
+                                   id="email"
+                                   name="email"
+                                   placeholder="john@company.com"
+                                   className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                               />
+                           </div>
 
-            <Footer/>
+                           {/* Inquiry Type */}
+                           <div className="space-y-2">
+                               <label
+                                   htmlFor="inquiry"
+                                   className="text-sm font-medium text-foreground"
+                               >
+                                   What is this regarding?
+                               </label>
+                               <select
+                                   id="inquiry"
+                                   name="inquiry"
+                                   className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                               >
+                                   <option value="">Select inquiry type</option>
+                                   <option value="sales">Sales / Enterprise Plan</option>
+                                   <option value="partnership">Data Partnership</option>
+                                   <option value="general">General Inquiry</option>
+                                   <option value="media">Media / Press</option>
+                               </select>
+                           </div>
+
+                           {/* Message */}
+                           <div className="space-y-2">
+                               <label
+                                   htmlFor="message"
+                                   className="text-sm font-medium text-foreground"
+                               >
+                                   Message
+                               </label>
+                               <textarea
+                                   id="message"
+                                   name="message"
+                                   placeholder="Tell us how we can help..."
+                                   className="min-h-[140px] w-full rounded-md border border-border bg-background px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring"
+                               />
+                           </div>
+
+                           {/* Human Check */}
+                           <div className="bg-muted/50 border border-border rounded-lg p-4 flex items-center gap-3">
+                               <input
+                                   type="checkbox"
+                                   id="human"
+                                   className="h-4 w-4 rounded border border-muted-foreground"
+                               />
+                               <label
+                                   htmlFor="human"
+                                   className="text-sm text-foreground cursor-pointer"
+                               >
+                                   I am human
+                               </label>
+                           </div>
+
+                           {/* Submit */}
+                           <button
+                               type="submit"
+                               className="w-full h-12 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition"
+                           >
+                               Send Message
+                           </button>
+
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </section>
+
+
+       <Footer/>
    </section>
   );
 };

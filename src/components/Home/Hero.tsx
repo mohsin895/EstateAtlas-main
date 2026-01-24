@@ -132,7 +132,7 @@ const DataCard = ({
 
 const Hero = () => {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#0A1532]">
+    <div className="relative min-h-screen w-full pt-[112px] overflow-hidden bg-[#0A1532]">
       {/* Decorative shapes */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-64 h-64 border border-sky-500/20 rounded-full" />

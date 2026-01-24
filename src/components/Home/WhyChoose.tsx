@@ -1,98 +1,138 @@
-import Image from 'next/image';
-import React from 'react';
-import cardimg from '../../../public/card1.png'
-import global from '../../../public/global.png'
-import data from '../../../public/Data.png'
-import Insight from '../../../public/KeyHome.png'
-import Analytics from '../../../public/Analaytic.png'
 const WhyChoose = () => {
     return (
-        <div className='py-10 container mx-auto'>
-            <div>
-                <h1 className='text-5xl font-semibold text-center text-[#0A1532]'>Why Choose <span className='text-[#3BA1DF]'>Estate Atlas</span>?</h1>
+        <section id="features" className="py-24 bg-background">
+            <div className="container mx-auto px-4">
+                {/* Section Header */}
+                <div className="mb-16 text-center">
+                    <h2 className="font-heading mb-4 text-3xl text-foreground md:text-4xl">
+                        Engineered for the Modern Real Estate Ecosystem
+                    </h2>
+                    <p className="mx-auto max-w-2xl text-muted-foreground">
+                        Purpose-built tools for every stakeholder in the global property
+                        investment landscape.
+                    </p>
+                </div>
+
+                {/* Feature Grid */}
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    {/* Institutional Investors */}
+                    <div className="group rounded-md border border-border bg-card p-6 transition-all duration-300 hover:border-sky/50 hover:shadow-lg">
+                        <div className="mb-5 flex h-12 w-12 bg-[#EBF6FB] items-center justify-center rounded-md bg-sky/10 transition-colors group-hover:bg-sky/20">
+                            <BuildingIcon />
+                        </div>
+                        <h3 className="font-heading mb-2 text-lg text-[#071636] font-[700]">
+                            Institutional Investors
+                        </h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                            Standardized, raw historical data integration for risk modeling and
+                            large-scale capital allocation.
+                        </p>
+                    </div>
+
+                    {/* Market Analysts */}
+                    <div className="group rounded-md border border-border bg-card p-6 transition-all duration-300 hover:border-sky/50 hover:shadow-lg">
+                        <div className="mb-5 flex h-12 w-12 bg-[#EBF6FB] items-center justify-center rounded-md bg-sky/10 transition-colors group-hover:bg-sky/20">
+                            <SearchIcon />
+                        </div>
+                        <h3 className="font-heading mb-2 text-lg text-[#071636] font-[700]">
+                            Market Analysts
+                        </h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                            Unbiased transparency for feasibility reports, consultancy, and
+                            market research.
+                        </p>
+                    </div>
+
+                    {/* Global Entrepreneurs */}
+                    <div className="group rounded-md border border-border bg-card p-6 transition-all duration-300 hover:border-sky/50 hover:shadow-lg">
+                        <div className="mb-5 flex h-12 w-12 bg-[#EBF6FB] items-center justify-center rounded-md bg-sky/10 transition-colors group-hover:bg-sky/20">
+                            <GlobeIcon />
+                        </div>
+                        <h3 className="font-heading mb-2 text-lg text-[#071636] font-[700]">
+                            Global Entrepreneurs
+                        </h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                            Accessible comparative metrics to identify yield gaps and optimize
+                            personal portfolios.
+                        </p>
+                    </div>
+
+                    {/* API Integration */}
+                    <div className="group rounded-md border border-border bg-card p-6 transition-all duration-300 hover:border-sky/50 hover:shadow-lg">
+                        <div className="mb-5 flex h-12 w-12 bg-[#EBF6FB] items-center justify-center rounded-md bg-sky/10 transition-colors group-hover:bg-sky/20">
+                            <LinkIcon />
+                        </div>
+                        <h3 className="font-heading mb-2 text-lg text-[#071636] font-[700]">
+                            API Integration
+                        </h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                            Seamlessly integrate validated global property data into your own
+                            platforms.
+                        </p>
+                    </div>
+                </div>
             </div>
-
-
-            <section className=' md:grid md:grid-cols-12  gap-15 my-15 md:space-y-0 space-y-5'>
-                <section className='border rounded-2xl bg-[#F7F7FD] border-[#E8F9F7] col-span-4  '>
-                    <div className='p-10 space-y-3'>
-                        <h3 className='text-3xl font-bold text-[#100A55]'>
-                        Stop guessing, <br />Start Knowing !
-                    </h3>
-                    <p className='text-[#100A55]'>Make data-driven investment decisions <br /> with tools designed for accuracy, <br /> transparency, and global reach.</p>
-                      <button className='py-3 px-4 bg-[#0A1532] rounded-lg text-white'>Start Now</button>
-                    </div>
-                  
-                    <div>
-                        <Image src={cardimg} alt='card1' width={500} height={300}></Image>
-
-                    </div>
-
-                  
-                    
-                </section>
-
-                <section className='col-span-8 md:grid md:grid-cols-2 gap-5  '>
-                    <div className=' space-y-6 p-4 md:border-none border'>
-                       <div className=' '>
-
-                           <Image src={global} alt='global' width={70} height={70}></Image>
-                       </div>
-                       <div className='space-y-4'>
-                        <h1 className='text-2xl font-bold text-[#000929]'>Global Market Coverage</h1>
-                        <p className='text-[#4D5461]'>Access verified data from 100+ global  markets, updated hourly. Compare  trends, yields, and risks across regions  with a single click.</p>
-                       </div>
-                    </div>
-                    <div className=' space-y-6 p-4 md:border-none border'>
-                       <div>
-
-                           <Image src={data} alt='global' width={70} height={70}></Image>
-                       </div>
-                       <div className='space-y-4'>
-                        <h1 className='text-2xl font-bold text-[#000929]'>Data-Driven Accuracy</h1>
-                        <p className='text-[#4D5461]'>Rely on rigorously audited data from trusted sources, including governments, agencies, and on-the-ground analysts.</p>
-                       </div>
-                    </div>
-                    <div className=' md:border-none border space-y-6 p-4'>
-                       <div>
-
-                           <Image src={Insight} alt='global' width={70} height={70}></Image>
-                       </div>
-                       <div className='space-y-4 '>
-                        <h1 className='text-2xl font-bold text-[#000929]'>Transparent Insights</h1>
-                        <p className='text-[#4D5461]'>Track real-time metrics like vacancy rates, rental yields, and price  trends. Export PDF/CSV reports instantly for client presentations.</p>
-                       </div>
-                    </div>
-                    <div className=' space-y-6 p-4 md:border-none border'>
-                       <div>
-
-                           <Image src={Analytics} alt='global' width={70} height={70}></Image>
-                       </div>
-                       <div className='space-y-4'>
-                        <h1 className='text-2xl font-bold text-[#000929]'>Tailored Analytics</h1>
-                        <p className='text-[#4D5461]'>Build custom dashboards, set alerts for market shifts, and automate workflows. Control every aspect of your analysis.</p>
-                       </div>
-                    </div>
-                    
-                   
-
-
-
-
-                </section>
-               
-
-
-
-
-
-            </section>
-
-
-     
-            
-        </div>
+        </section>
     );
 };
 
 export default WhyChoose;
+
+/* ---------------- Icons ---------------- */
+
+const BuildingIcon = () => (
+    <svg
+        className="h-6 w-6 text-sky"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+    >
+        <rect x="4" y="2" width="16" height="20" rx="2" />
+        <path d="M9 22v-4h6v4" />
+        <path d="M8 6h.01M12 6h.01M16 6h.01" />
+        <path d="M8 10h.01M12 10h.01M16 10h.01" />
+        <path d="M8 14h.01M12 14h.01M16 14h.01" />
+    </svg>
+);
+
+const SearchIcon = () => (
+    <svg
+        className="h-6 w-6 text-sky"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+    >
+        <circle cx="11" cy="11" r="8" />
+        <path d="M21 21l-4.3-4.3" />
+    </svg>
+);
+
+const GlobeIcon = () => (
+    <svg
+        className="h-6 w-6 text-sky"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+    >
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 2a14.5 14.5 0 0 0 0 20" />
+        <path d="M2 12h20" />
+    </svg>
+);
+
+const LinkIcon = () => (
+    <svg
+        className="h-6 w-6 text-sky"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+    >
+        <path d="M9 17H7a5 5 0 0 1 0-10h2" />
+        <path d="M15 7h2a5 5 0 1 1 0 10h-2" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+    </svg>
+);

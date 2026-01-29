@@ -29,23 +29,24 @@ const About = () => {
                 <div className="absolute inset-0 bg-[#0A1532]/80"></div>
 
                 {/* Content */}
-                <div className="container relative z-10 flex flex-col items-start justify-center text-left pt-20 pb-24">
-                    <div className="border-l-4 border-sky pl-6 max-w-5xl">
+                <div className="container relative z-10 flex flex-col items-center justify-center text-left pt-20 pb-24">
+                    <div className="border-l-4 border-[#3BAADD] pl-6 max-w-5xl mx-auto">
                         <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-primary-foreground leading-tight mb-8">
                             The New Standard In International Real Estate Data
                         </h1>
-                        <p className="font-sans text-lg md:text-xl text-light-gray max-w-2xl leading-relaxed">
+                        <p className="font-sans text-lg md:text-xl text-[#e6e6e6] max-w-5xl mx-auto leading-relaxed">
                             We are removing the guesswork from global investing. Estate Atlas empowers
                             investors, analysts, and professionals with the data-driven insights
                             needed to build borderless portfolios.
                         </p>
                     </div>
                 </div>
+
             </section>
             <section className="grid grid-cols-1 md:grid-cols-2">
                 {/* Mission */}
                 <div className="bg-[#071636] p-12 md:p-16">
-    <span className="text-sky text-sm font-heading tracking-widest uppercase mb-4 block">
+    <span className="text-[#3BAADD] text-sm font-heading tracking-widest uppercase mb-4 block">
       Our Mission
     </span>
                     <p className="text-primary-foreground text-lg leading-relaxed">
@@ -249,7 +250,7 @@ const About = () => {
                         Join thousands of investors using Estate Atlas to make smarter, data-driven decisions.
                     </p>
                     <a href="/dashboard">
-                        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 bg-sky hover:bg-sky/90 text-primary font-semibold px-8 py-6 text-lg">
+                        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 bg-[#379BCD] hover:bg-[#379BCD]/90 text-primary font-semibold px-8 py-6 text-lg">
                             Get Started Today
                         </button>
                     </a>

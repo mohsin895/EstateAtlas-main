@@ -20,6 +20,60 @@ interface WordPressPost {
   };
 }
 
+
+type Article = {
+    title: string;
+    date: string;
+    image: string;
+    categories: string[];
+    alt: string;
+};
+
+const articles: Article[] = [
+    {
+        title: "Germany's 2026 Property Tax Reform: What Foreign Investors Need to Know",
+        date: "Oct 24, 2025",
+        image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80",
+        categories: ["TAX LAW", "GERMANY"],
+        alt: "Germany's 2026 Property Tax Reform",
+    },
+    {
+        title: "Dubai Marina vs. Palm Jumeirah: A 10-Year Rental Yield Comparison",
+        date: "Oct 18, 2025",
+        image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80",
+        categories: ["YIELD ANALYSIS"],
+        alt: "Dubai Marina vs. Palm Jumeirah",
+    },
+    {
+        title: "How One Investor Built a €2M Portfolio Across 4 Countries",
+        date: "Oct 12, 2025",
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
+        categories: ["CASE STUDY"],
+        alt: "Investor Portfolio Case Study",
+    },
+    {
+        title: "The 60/40 Rule for International Real Estate Portfolios",
+        date: "Oct 5, 2025",
+        image: "https://images.unsplash.com/photo-1464938050520-ef2571c93e3e?w=600&q=80",
+        categories: ["STRATEGY", "DIVERSIFICATION"],
+        alt: "60/40 Real Estate Rule",
+    },
+    {
+        title: "Singapore's Cooling Measures: Impact on Foreign Ownership",
+        date: "Sep 28, 2025",
+        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+        categories: ["MARKET REPORT", "ASIA"],
+        alt: "Singapore Cooling Measures",
+    },
+    {
+        title: "Portugal's Golden Visa Alternative: New Pathways for 2026",
+        date: "Sep 20, 2025",
+        image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80",
+        categories: ["EMERGING MARKETS"],
+        alt: "Portugal Golden Visa Alternative",
+    },
+];
+
 const Articles = () => {
   const [posts, setPosts] = useState<WordPressPost[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<WordPressPost[]>([]);
@@ -79,7 +133,7 @@ const Articles = () => {
                   </h1>
 
                   {/* Subheading */}
-                  <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-10">
+                  <p className="text-lg md:text-xl text-[#ffffffb3] max-w-2xl mx-auto mb-10">
                       Analysis, regulatory updates, and yield forecasts from our data team.
                   </p>
 
@@ -170,77 +224,115 @@ const Articles = () => {
               </div>
           </section>
 
-
-
-          <div className="mx-auto container">
-
-          {/* Display Posts */}
-          <div className="mt-10">
-            {loading ? (
-              <div className="grid md:grid-cols-3 gap-6">
-                {[...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="animate-pulse border rounded-2xl p-4 shadow-sm"
-                  >
-                    <div className="bg-gray-300 h-40 w-full rounded-xl mb-4"></div>
-                    <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
-                    <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+          <section className="py-12 md:py-16 px-4">
+              <div className="container mx-auto">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {articles.map((article, index) => (
+                          <article
+                              key={index}
+                              className="group bg-card rounded-xl overflow-hidden shadow-md border border-border hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                          >
+                              <div className="relative aspect-video overflow-hidden">
+                                  <Image
+                                      src={article.image}
+                                      alt={article.alt}
+                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                      fill
+                                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                  />
+                                  <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                                      {article.categories.map((category, idx) => (
+                                          <span
+                                              key={idx}
+                                              className="px-2 py-1 bg-primary/90 text-primary-foreground text-xs font-bold rounded backdrop-blur-sm"
+                                          >
+                      {category}
+                    </span>
+                                      ))}
+                                  </div>
+                              </div>
+                              <div className="p-5">
+                                  <h3 className="text-lg font-bold text-foreground mb-3 line-clamp-2 group-hover:text-sky transition-colors">
+                                      {article.title}
+                                  </h3>
+                                  <p className="text-sm text-muted-foreground">{article.date}</p>
+                              </div>
+                          </article>
+                      ))}
                   </div>
-                ))}
               </div>
-            ) : error ? (
-              <p className="text-red-600">{error}</p>
-            ) : filteredPosts.length > 0 ? (
-              <div className="grid md:grid-cols-3 gap-8">
-                {filteredPosts.map((post) => {
-                  const imageUrl =
-                    post._embedded?.['wp:featuredmedia']?.[0]?.source_url || null;
+          </section>
 
-                  return (
-                    <div
-                      key={post.id}
-                      className="bg-white rounded-xl hover:shadow-xl transition-all duration-300 overflow-hidden border"
-                    >
-                      <div className="relative w-full h-48 bg-gray-200 flex items-center justify-center">
-                        {imageUrl ? (
-                          <Image
-                            src={imageUrl}
-                            alt={post.title.rendered}
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          <span className="text-gray-500 text-sm">No Image</span>
-                        )}
-                      </div>
-                      <div className="p-5">
-                        <h2 className="text-xl font-semibold mb-3 line-clamp-2">
-                          <Link href={`/articles/${post.id}`}>
-                            {post.title.rendered}
-                          </Link>
-                        </h2>
-                        <div
-                          className="text-gray-600 text-sm line-clamp-3"
-                          dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-                        />
-                        <Link
-                          href={`/articles/${post.id}`}
-                          className="text-[#308fd9] hover:underline mt-4 block font-medium"
-                        >
-                          Read More →
-                        </Link>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className='text-2xl font-bold text-center'>No posts found.</p>
-            )}
-          </div>
-        </div>
+
+
+        {/*  <div className="mx-auto container">*/}
+
+        {/*  <div className="mt-10">*/}
+        {/*    {loading ? (*/}
+        {/*      <div className="grid md:grid-cols-3 gap-6">*/}
+        {/*        {[...Array(6)].map((_, i) => (*/}
+        {/*          <div*/}
+        {/*            key={i}*/}
+        {/*            className="animate-pulse border rounded-2xl p-4 shadow-sm"*/}
+        {/*          >*/}
+        {/*            <div className="bg-gray-300 h-40 w-full rounded-xl mb-4"></div>*/}
+        {/*            <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>*/}
+        {/*            <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>*/}
+        {/*            <div className="h-3 bg-gray-200 rounded w-5/6"></div>*/}
+        {/*          </div>*/}
+        {/*        ))}*/}
+        {/*      </div>*/}
+        {/*    ) : error ? (*/}
+        {/*      <p className="text-red-600">{error}</p>*/}
+        {/*    ) : filteredPosts.length > 0 ? (*/}
+        {/*      <div className="grid md:grid-cols-3 gap-8">*/}
+        {/*        {filteredPosts.map((post) => {*/}
+        {/*          const imageUrl =*/}
+        {/*            post._embedded?.['wp:featuredmedia']?.[0]?.source_url || null;*/}
+
+        {/*          return (*/}
+        {/*            <div*/}
+        {/*              key={post.id}*/}
+        {/*              className="bg-white rounded-xl hover:shadow-xl transition-all duration-300 overflow-hidden border"*/}
+        {/*            >*/}
+        {/*              <div className="relative w-full h-48 bg-gray-200 flex items-center justify-center">*/}
+        {/*                {imageUrl ? (*/}
+        {/*                  <Image*/}
+        {/*                    src={imageUrl}*/}
+        {/*                    alt={post.title.rendered}*/}
+        {/*                    fill*/}
+        {/*                    className="object-cover"*/}
+        {/*                  />*/}
+        {/*                ) : (*/}
+        {/*                  <span className="text-gray-500 text-sm">No Image</span>*/}
+        {/*                )}*/}
+        {/*              </div>*/}
+        {/*              <div className="p-5">*/}
+        {/*                <h2 className="text-xl font-semibold mb-3 line-clamp-2">*/}
+        {/*                  <Link href={`/articles/${post.id}`}>*/}
+        {/*                    {post.title.rendered}*/}
+        {/*                  </Link>*/}
+        {/*                </h2>*/}
+        {/*                <div*/}
+        {/*                  className="text-gray-600 text-sm line-clamp-3"*/}
+        {/*                  dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}*/}
+        {/*                />*/}
+        {/*                <Link*/}
+        {/*                  href={`/articles/${post.id}`}*/}
+        {/*                  className="text-[#308fd9] hover:underline mt-4 block font-medium"*/}
+        {/*                >*/}
+        {/*                  Read More →*/}
+        {/*                </Link>*/}
+        {/*              </div>*/}
+        {/*            </div>*/}
+        {/*          );*/}
+        {/*        })}*/}
+        {/*      </div>*/}
+        {/*    ) : (*/}
+        {/*      <p className='text-2xl font-bold text-center'>No posts found.</p>*/}
+        {/*    )}*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
 
       <Footer />

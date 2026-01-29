@@ -13,10 +13,11 @@ const nextConfig: NextConfig = {
                 port: "8014",
                 pathname: "/storage/**",
             },
+
         ],
         domains: [
             "peru-stork-399467.hostingersite.com",
-            "kashasears.codexwizardssquad.com",
+            "kashasears.codexwizardssquad.com","images.unsplash.com"
         ],
     },
 };

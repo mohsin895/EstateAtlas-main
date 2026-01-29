@@ -87,40 +87,44 @@ const DataCard = ({
         </div>
 
         {/* Yield */}
-        <div className="space-y-1">
+        <div className="space-y-1 flex gap-[20px]">
           <div
             className={`text-3xl font-bold leading-none ${yieldColorClass}`}
           >
             {yieldValue}
+
+              <p className="text-gray-500 text-[10px] uppercase tracking-wider font-medium">
+                  Gross Yield
+              </p>
           </div>
-          <p className="text-gray-500 text-[10px] uppercase tracking-wider font-medium">
-            Gross Yield
-          </p>
+
+
+            <div className="mt-2.5">
+                <div
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
+                        highlighted
+                            ? 'bg-green-500/15 border border-green-400/30'
+                            : 'bg-green-500/10 border border-green-500/20'
+                    }`}
+                >
+                    <TrendingUp
+                        className={`w-3.5 h-3.5 ${
+                            highlighted ? 'text-green-400' : 'text-green-500/70'
+                        }`}
+                    />
+                    <span
+                        className={`text-sm font-semibold ${
+                            highlighted ? 'text-green-400' : 'text-green-500/70'
+                        }`}
+                    >
+              {change}
+            </span>
+                </div>
+            </div>
         </div>
 
         {/* Change */}
-        <div className="mt-2.5">
-          <div
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
-              highlighted
-                ? 'bg-green-500/15 border border-green-400/30'
-                : 'bg-green-500/10 border border-green-500/20'
-            }`}
-          >
-            <TrendingUp
-              className={`w-3.5 h-3.5 ${
-                highlighted ? 'text-green-400' : 'text-green-500/70'
-              }`}
-            />
-            <span
-              className={`text-sm font-semibold ${
-                highlighted ? 'text-green-400' : 'text-green-500/70'
-              }`}
-            >
-              {change}
-            </span>
-          </div>
-        </div>
+
       </div>
     </div>
   );
@@ -1288,11 +1292,11 @@ opacity="0.6"
             </svg>
 
             {/* Cards */}
-            <div className="absolute left-[23%] top-[20%]">
+            <div className="absolute left-[35%] top-[10%]">
               <DataCard city="London" yield="4.1%" change="+1.2%" opacity="medium" />
             </div>
 
-            <div className="absolute left-[55%] top-[35%]">
+            <div className="absolute left-[62%] top-[20%]">
               <DataCard
                 city="Dubai"
                 yield="6.8%"
@@ -1301,7 +1305,7 @@ opacity="0.6"
               />
             </div>
 
-            <div className="absolute left-[75%] top-[52%]">
+            <div className="absolute left-[82%] top-[35%]">
               <DataCard
                 city="Singapore"
                 yield="5.2%"

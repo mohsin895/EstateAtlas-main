@@ -23,6 +23,8 @@ const MapVisualization: React.FC = () => {
 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
+        const safeCanvas = canvas;
+        const safeCtx = ctx;
 
         let frame = 0;
         let animationId: number;

@@ -14,8 +14,8 @@ interface Cities {
     singapore: City;
 }
 
-const MapVisualization = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+const MapVisualization: React.FC = () => {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -26,7 +26,8 @@ const MapVisualization = () => {
 
         let frame = 0;
         let animationId: number;
-        let width: number, height: number;
+        let width: number;
+        let height: number;
 
         // Land polygons data - Mercator projection
         const landPolygons: { [key: string]: number[][] } = {
@@ -125,15 +126,14 @@ const MapVisualization = () => {
             return inside;
         }
 
-        function generateDots() {
+        function generateDots(): { x: number; y: number }[] {
             const dots: { x: number; y: number }[] = [];
-            const spacing = 0.6; // Tighter spacing for more data points
+            const spacing = 0.6;
 
             for (let x = 0; x <= 135; x += spacing) {
                 for (let y = 0; y <= 95; y += spacing) {
-                    for (const [, polygon] of Object.entries(landPolygons)) {
+                    for (const polygon of Object.values(landPolygons)) {
                         if (isPointInPolygon(x, y, polygon)) {
-                            // Minimal randomization for uniform, engineered look
                             dots.push({
                                 x: x + (Math.random() - 0.5) * 0.05,
                                 y: y + (Math.random() - 0.5) * 0.05
@@ -148,7 +148,7 @@ const MapVisualization = () => {
 
         const dots = generateDots();
 
-        function resize() {
+        function resize(): void {
             const rect = canvas.getBoundingClientRect();
             const dpr = window.devicePixelRatio || 1;
             width = rect.width;
@@ -158,22 +158,21 @@ const MapVisualization = () => {
             ctx.scale(dpr, dpr);
         }
 
-        function animate() {
+        function animate(): void {
             frame++;
             ctx.clearRect(0, 0, width, height);
 
-            // Draw uniform dots forming the world map - thousands of small data points
+            // Draw uniform dots forming the world map
             dots.forEach(dot => {
                 const x = (dot.x / 135) * width;
                 const y = (dot.y / 95) * height;
                 ctx.beginPath();
                 ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-                // Light blue-grey dots at 20% opacity - representing data points
                 ctx.fillStyle = 'rgba(120, 150, 180, 0.2)';
                 ctx.fill();
             });
 
-            // Draw connection arcs - very thin, semi-transparent for global connectivity
+            // Draw connection arcs
             connections.forEach(([from, to]) => {
                 const c1 = cities[from];
                 const c2 = cities[to];
@@ -185,45 +184,42 @@ const MapVisualization = () => {
                 const midX = (x1 + x2) / 2;
                 const midY = (y1 + y2) / 2;
                 const dist = Math.hypot(x2 - x1, y2 - y1);
-                const arc = dist * 0.12; // Gentle curve for connectivity
+                const arc = dist * 0.12;
 
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.quadraticCurveTo(midX, midY - arc, x2, y2);
-                // Very thin, semi-transparent sky blue arc
                 ctx.strokeStyle = 'rgba(59, 161, 223, 0.12)';
                 ctx.lineWidth = 0.7;
                 ctx.stroke();
 
-                // Moving particle along the arc - data flow visualization
+                // Moving particle
                 const t = ((frame * 0.4) % 220) / 220;
                 const px = (1-t)*(1-t)*x1 + 2*(1-t)*t*midX + t*t*x2;
                 const py = (1-t)*(1-t)*y1 + 2*(1-t)*t*(midY - arc) + t*t*y2;
 
                 ctx.beginPath();
                 ctx.arc(px, py, 1.8, 0, Math.PI * 2);
-                // Sky blue particle
                 ctx.fillStyle = 'rgba(59, 161, 223, 0.5)';
                 ctx.fill();
             });
 
-            // Draw city nodes - glowing Sky Blue (#3ba1df) pulse dots
+            // Draw city nodes
             Object.values(cities).forEach(city => {
                 const x = (city.x / 135) * width;
                 const y = (city.y / 95) * height;
 
-                // Smooth pulse animation
                 const pulse = 1 + Math.sin(frame * 0.04) * 0.25;
                 const pulseOpacity = 0.2 - Math.sin(frame * 0.04) * 0.08;
 
-                // Outer pulse ring - expanding glow
+                // Outer pulse ring
                 ctx.beginPath();
                 ctx.arc(x, y, 14 * pulse, 0, Math.PI * 2);
                 ctx.strokeStyle = `rgba(59, 161, 223, ${pulseOpacity})`;
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                // Glow halo - radial gradient
+                // Glow halo
                 const glow = ctx.createRadialGradient(x, y, 0, x, y, 9);
                 glow.addColorStop(0, 'rgba(59, 161, 223, 0.7)');
                 glow.addColorStop(0.5, 'rgba(59, 161, 223, 0.3)');
@@ -233,13 +229,13 @@ const MapVisualization = () => {
                 ctx.fillStyle = glow;
                 ctx.fill();
 
-                // Main node - solid sky blue
+                // Main node
                 ctx.beginPath();
                 ctx.arc(x, y, 5, 0, Math.PI * 2);
                 ctx.fillStyle = '#3ba1df';
                 ctx.fill();
 
-                // Center highlight - bright white core
+                // Center highlight
                 ctx.beginPath();
                 ctx.arc(x, y, 2, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffffff';
@@ -252,7 +248,7 @@ const MapVisualization = () => {
         resize();
         animate();
 
-        const handleResize = () => resize();
+        const handleResize = (): void => resize();
         window.addEventListener('resize', handleResize);
 
         return () => {
@@ -286,20 +282,20 @@ const MapVisualization = () => {
                         className="absolute inset-0 w-full h-full"
                     />
 
-                    {/* Glassmorphism Data Cards with Clean Connectors */}
+                    {/* Glassmorphism Data Cards */}
                     <div className="absolute left-[44%] top-[6%] z-20 opacity-0 animate-[card-enter_0.5s_ease-out_0.3s_forwards]">
-                        <DataCard city="London" yield="4.1%" change="+1.2%" connectorDirection="bottom" />
+                        <DataCard city="London" yieldValue="4.1%" change="+1.2%" connectorDirection="bottom" />
                     </div>
 
                     <div className="absolute left-[58%] top-[28%] z-20 opacity-0 animate-[card-enter_0.5s_ease-out_0.5s_forwards]">
-                        <DataCard city="Dubai" yield="6.8%" change="+1.5%" connectorDirection="bottom" />
+                        <DataCard city="Dubai" yieldValue="6.8%" change="+1.5%" connectorDirection="bottom" />
                     </div>
 
                     <div className="absolute right-[15%] top-[46%] z-20 opacity-0 animate-[card-enter_0.5s_ease-out_0.7s_forwards]">
-                        <DataCard city="Singapore" yield="5.2%" change="+0.8%" connectorDirection="bottom-left" />
+                        <DataCard city="Singapore" yieldValue="5.2%" change="+0.8%" connectorDirection="bottom-left" />
                     </div>
 
-                    <style jsx>{`
+                    <style>{`
                         @keyframes card-enter {
                             from {
                                 opacity: 0;
@@ -319,14 +315,13 @@ const MapVisualization = () => {
 
 interface DataCardProps {
     city: string;
-    yield: string;
+    yieldValue: string;
     change: string;
     connectorDirection?: 'bottom' | 'bottom-left' | 'bottom-right';
 }
 
-const DataCard = ({ city, yield: yieldValue, change, connectorDirection = 'bottom' }: DataCardProps) => {
-    // Calculate connector position based on direction
-    const getConnectorStyles = () => {
+const DataCard: React.FC<DataCardProps> = ({ city, yieldValue, change, connectorDirection = 'bottom' }) => {
+    const getConnectorStyles = (): React.CSSProperties => {
         switch (connectorDirection) {
             case 'bottom':
                 return { left: '50%', top: '100%', transform: 'translateX(-50%)' };

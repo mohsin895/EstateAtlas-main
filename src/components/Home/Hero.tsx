@@ -151,27 +151,27 @@ const MapVisualization: React.FC = () => {
         const dots = generateDots();
 
         function resize(): void {
-            const rect = canvas.getBoundingClientRect();
+            const rect = safeCanvas.getBoundingClientRect();
             const dpr = window.devicePixelRatio || 1;
             width = rect.width;
             height = rect.height;
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.scale(dpr, dpr);
+            safeCanvas.width = width * dpr;
+            safeCanvas.height = height * dpr;
+            safeCtx.scale(dpr, dpr);
         }
 
         function animate(): void {
             frame++;
-            ctx.clearRect(0, 0, width, height);
+            safeCtx.clearRect(0, 0, width, height);
 
             // Draw uniform dots forming the world map
             dots.forEach(dot => {
                 const x = (dot.x / 135) * width;
                 const y = (dot.y / 95) * height;
-                ctx.beginPath();
-                ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(120, 150, 180, 0.2)';
-                ctx.fill();
+                safeCtx.beginPath();
+                safeCtx.arc(x, y, 2.5, 0, Math.PI * 2);
+                safeCtx.fillStyle = 'rgba(120, 150, 180, 0.2)';
+                safeCtx.fill();
             });
 
             // Draw connection arcs
@@ -188,22 +188,22 @@ const MapVisualization: React.FC = () => {
                 const dist = Math.hypot(x2 - x1, y2 - y1);
                 const arc = dist * 0.12;
 
-                ctx.beginPath();
-                ctx.moveTo(x1, y1);
-                ctx.quadraticCurveTo(midX, midY - arc, x2, y2);
-                ctx.strokeStyle = 'rgba(59, 161, 223, 0.12)';
-                ctx.lineWidth = 0.7;
-                ctx.stroke();
+                safeCtx.beginPath();
+                safeCtx.moveTo(x1, y1);
+                safeCtx.quadraticCurveTo(midX, midY - arc, x2, y2);
+                safeCtx.strokeStyle = 'rgba(59, 161, 223, 0.12)';
+                safeCtx.lineWidth = 0.7;
+                safeCtx.stroke();
 
                 // Moving particle
                 const t = ((frame * 0.4) % 220) / 220;
                 const px = (1-t)*(1-t)*x1 + 2*(1-t)*t*midX + t*t*x2;
                 const py = (1-t)*(1-t)*y1 + 2*(1-t)*t*(midY - arc) + t*t*y2;
 
-                ctx.beginPath();
-                ctx.arc(px, py, 1.8, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(59, 161, 223, 0.5)';
-                ctx.fill();
+                safeCtx.beginPath();
+                safeCtx.arc(px, py, 1.8, 0, Math.PI * 2);
+                safeCtx.fillStyle = 'rgba(59, 161, 223, 0.5)';
+                safeCtx.fill();
             });
 
             // Draw city nodes
@@ -215,33 +215,33 @@ const MapVisualization: React.FC = () => {
                 const pulseOpacity = 0.2 - Math.sin(frame * 0.04) * 0.08;
 
                 // Outer pulse ring
-                ctx.beginPath();
-                ctx.arc(x, y, 14 * pulse, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(59, 161, 223, ${pulseOpacity})`;
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
+                safeCtx.beginPath();
+                safeCtx.arc(x, y, 14 * pulse, 0, Math.PI * 2);
+                safeCtx.strokeStyle = `rgba(59, 161, 223, ${pulseOpacity})`;
+                safeCtx.lineWidth = 1.5;
+                safeCtx.stroke();
 
                 // Glow halo
-                const glow = ctx.createRadialGradient(x, y, 0, x, y, 9);
+                const glow = safeCtx.createRadialGradient(x, y, 0, x, y, 9);
                 glow.addColorStop(0, 'rgba(59, 161, 223, 0.7)');
                 glow.addColorStop(0.5, 'rgba(59, 161, 223, 0.3)');
                 glow.addColorStop(1, 'rgba(59, 161, 223, 0)');
-                ctx.beginPath();
-                ctx.arc(x, y, 9, 0, Math.PI * 2);
-                ctx.fillStyle = glow;
-                ctx.fill();
+                safeCtx.beginPath();
+                safeCtx.arc(x, y, 9, 0, Math.PI * 2);
+                safeCtx.fillStyle = glow;
+                safeCtx.fill();
 
                 // Main node
-                ctx.beginPath();
-                ctx.arc(x, y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = '#3ba1df';
-                ctx.fill();
+                safeCtx.beginPath();
+                safeCtx.arc(x, y, 5, 0, Math.PI * 2);
+                safeCtx.fillStyle = '#3ba1df';
+                safeCtx.fill();
 
                 // Center highlight
-                ctx.beginPath();
-                ctx.arc(x, y, 2, 0, Math.PI * 2);
-                ctx.fillStyle = '#ffffff';
-                ctx.fill();
+                safeCtx.beginPath();
+                safeCtx.arc(x, y, 2, 0, Math.PI * 2);
+                safeCtx.fillStyle = '#ffffff';
+                safeCtx.fill();
             });
 
             animationId = requestAnimationFrame(animate);

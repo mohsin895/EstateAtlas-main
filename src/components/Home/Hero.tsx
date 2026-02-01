@@ -168,8 +168,8 @@ const MapVisualization = () => {
                 const y = (dot.y / 95) * height;
                 ctx.beginPath();
                 ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-                // Light blue dots - representing data points
-                ctx.fillStyle = '#5FB6FF';
+                // Light blue-grey dots at 20% opacity - representing data points
+                ctx.fillStyle = 'rgba(120, 150, 180, 0.2)';
                 ctx.fill();
             });
 

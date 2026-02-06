@@ -47,13 +47,13 @@ const Navbar: React.FC = () => {
 
     const navLinkClass = (path: string): string =>
         isActive(path)
-            ? "text-[#389EAC] font-semibold"
+            ? "text-[#3baade] font-semibold"
             : "text-primary-foreground/80 hover:text-primary-foreground";
 
     const mobileNavClass = (path: string): string =>
         isActive(path)
-            ? "text-[#3BA1DF] font-bold"
-            : "text-white hover:text-[#3BA1DF]";
+            ? "text-[#3baade] font-bold"
+            : "text-white hover:text-[#3baade]";
 
     return (
         <nav

@@ -14624,7 +14624,7 @@ const MapVisualization: React.FC = () => {
 
                 ctx.beginPath();
                 ctx.arc(x, y, dotSize, 0, Math.PI * 2);
-                ctx.fillStyle = '#4a9ff5';
+                ctx.fillStyle = '#ADD8E633';
                 ctx.fill();
             });
 

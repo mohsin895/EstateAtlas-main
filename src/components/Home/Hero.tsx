@@ -14725,7 +14725,19 @@ export default function Hero() {
     return (
         <div className="relative min-h-screen w-full pt-[112px] overflow-hidden bg-[#05080f]">
             <div className="container relative z-10 pt-10 pb-16 mx-auto px-4">
-
+                <div className="text-center max-w-4xl mx-auto mb-12">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 font-bold">
+                        International Real Estate Investing, Powered by Data
+                    </h1>
+                    <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8">
+                        Navigate the fragmented global market with confidence. Estate Atlas
+                        provides institutional-grade analytics, yield comparisons, and
+                        regulatory insights for over 15 countries.
+                    </p>
+                    <button className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold px-8 py-4 text-lg rounded-md transition-colors">
+                        Analyze Global Markets
+                    </button>
+                </div>
                 {/* MAP */}
                 <div className="relative w-full max-w-[1200px] h-[420px] md:h-[520px] mx-auto">
                     <div className="relative w-full h-full  rounded-xl overflow-hidden">

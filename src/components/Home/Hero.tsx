@@ -1,6 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
+
+/* ================= TYPES ================= */
 
 interface Dot {
     x: number;
@@ -19,19 +21,31 @@ interface Cities {
     singapore: City;
 }
 
-const MapVisualization: React.FC = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+interface DataCardProps {
+    city: string;
+    value: string;
+    trend: string;
+    position: string;
+    delay: string;
+}
+
+/* ================= HERO ================= */
+
+export default function Hero() {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const frameRef = useRef<number>(0);
-    const animationIdRef = useRef<number>();
+
+    // ✅ FIXED
+    const animationIdRef = useRef<number | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        const worldMapGrid: Dot[] = [
+        const worldMapGrid: Dot[] =[
             {
                 "x": 43,
                 "y": 2
@@ -14584,13 +14598,13 @@ const MapVisualization: React.FC = () => {
             newYork: { x: 37, y: 34 },
             london: { x: 66, y: 23 },
             dubai: { x: 81, y: 44 },
-            singapore: { x: 103, y: 54 }
+            singapore: { x: 103, y: 54 },
         };
 
         const connections: [keyof Cities, keyof Cities][] = [
-            ['newYork', 'london'],
-            ['london', 'dubai'],
-            ['dubai', 'singapore']
+            ["newYork", "london"],
+            ["london", "dubai"],
+            ["dubai", "singapore"],
         ];
 
         const gridWidth = 130;
@@ -14599,15 +14613,17 @@ const MapVisualization: React.FC = () => {
         const resize = () => {
             const rect = canvas.getBoundingClientRect();
             const dpr = window.devicePixelRatio || 1;
+
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
+
+            ctx.setTransform(1, 0, 0, 1, 0, 0); // reset
             ctx.scale(dpr, dpr);
-            canvas.style.width = `${rect.width}px`;
-            canvas.style.height = `${rect.height}px`;
         };
 
         const animate = () => {
             frameRef.current++;
+
             const width = canvas.clientWidth;
             const height = canvas.clientHeight;
 
@@ -14617,21 +14633,19 @@ const MapVisualization: React.FC = () => {
             const spacingY = height / gridHeight;
             const dotSize = 3;
 
-            // Draw world map dots
-            worldMapGrid.forEach(dot => {
-                const x = dot.x * spacingX;
-                const y = dot.y * spacingY;
-
+            /* MAP DOTS */
+            worldMapGrid.forEach((dot) => {
                 ctx.beginPath();
-                ctx.arc(x, y, dotSize, 0, Math.PI * 2);
-                ctx.fillStyle = '#ADD8E633';
+                ctx.arc(dot.x * spacingX, dot.y * spacingY, dotSize, 0, Math.PI * 2);
+                ctx.fillStyle = "#ADD8E633";
                 ctx.fill();
             });
 
-            // Draw connections between cities
+            /* CONNECTIONS */
             connections.forEach(([from, to]) => {
                 const c1 = cities[from];
                 const c2 = cities[to];
+
                 const x1 = c1.x * spacingX;
                 const y1 = c1.y * spacingY;
                 const x2 = c2.x * spacingX;
@@ -14645,55 +14659,52 @@ const MapVisualization: React.FC = () => {
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.quadraticCurveTo(midX, midY - arc, x2, y2);
-                ctx.strokeStyle = 'rgba(59, 130, 246, 0.35)';
+                ctx.strokeStyle = "rgba(59,130,246,0.35)";
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                // Animated particle
                 const t = ((frameRef.current * 0.4) % 180) / 180;
-                const px = (1-t)*(1-t)*x1 + 2*(1-t)*t*midX + t*t*x2;
-                const py = (1-t)*(1-t)*y1 + 2*(1-t)*t*(midY - arc) + t*t*y2;
+                const px =
+                    (1 - t) * (1 - t) * x1 +
+                    2 * (1 - t) * t * midX +
+                    t * t * x2;
+                const py =
+                    (1 - t) * (1 - t) * y1 +
+                    2 * (1 - t) * t * (midY - arc) +
+                    t * t * y2;
 
                 ctx.beginPath();
                 ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(59, 130, 246, 0.8)';
+                ctx.fillStyle = "rgba(59,130,246,0.8)";
                 ctx.fill();
             });
 
-            // Draw city markers
-            Object.values(cities).forEach(city => {
+            /* CITY MARKERS */
+            Object.values(cities).forEach((city) => {
                 const x = city.x * spacingX;
                 const y = city.y * spacingY;
 
-                // Pulsing ring
                 const pulse = 1 + Math.sin(frameRef.current * 0.04) * 0.3;
                 const alpha = 0.25 - Math.sin(frameRef.current * 0.04) * 0.1;
 
                 ctx.beginPath();
                 ctx.arc(x, y, 10 * pulse, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+                ctx.strokeStyle = `rgba(56,189,248,${alpha})`;
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                // Glow effect
                 const glow = ctx.createRadialGradient(x, y, 0, x, y, 8);
-                glow.addColorStop(0, 'rgba(56, 189, 248, 0.6)');
-                glow.addColorStop(1, 'rgba(56, 189, 248, 0)');
+                glow.addColorStop(0, "rgba(56,189,248,0.6)");
+                glow.addColorStop(1, "rgba(56,189,248,0)");
+
                 ctx.beginPath();
                 ctx.arc(x, y, 8, 0, Math.PI * 2);
                 ctx.fillStyle = glow;
                 ctx.fill();
 
-                // Core dot
                 ctx.beginPath();
                 ctx.arc(x, y, 4.5, 0, Math.PI * 2);
-                ctx.fillStyle = '#38bdf8';
-                ctx.fill();
-
-                // Inner highlight
-                ctx.beginPath();
-                ctx.arc(x, y, 2, 0, Math.PI * 2);
-                ctx.fillStyle = '#fff';
+                ctx.fillStyle = "#38bdf8";
                 ctx.fill();
             });
 
@@ -14702,123 +14713,65 @@ const MapVisualization: React.FC = () => {
 
         resize();
         animate();
-
-        window.addEventListener('resize', resize);
+        window.addEventListener("resize", resize);
 
         return () => {
-            window.removeEventListener('resize', resize);
-            if (animationIdRef.current) {
+            window.removeEventListener("resize", resize);
+            if (animationIdRef.current)
                 cancelAnimationFrame(animationIdRef.current);
-            }
         };
     }, []);
 
     return (
         <div className="relative min-h-screen w-full pt-[112px] overflow-hidden bg-[#05080f]">
-            <style jsx>{`
-                @keyframes cardEnter {
-                    from {
-                        opacity: 0;
-                        transform: translateY(-10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-            `}</style>
             <div className="container relative z-10 pt-10 pb-16 mx-auto px-4">
-                {/* Header Text */}
-                <div className="text-center max-w-4xl mx-auto mb-12">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 font-bold">
-                        International Real Estate Investing, Powered by Data
-                    </h1>
-                    <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8">
-                        Navigate the fragmented global market with confidence. Estate Atlas
-                        provides institutional-grade analytics, yield comparisons, and
-                        regulatory insights for over 15 countries.
-                    </p>
-                    <button className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold px-8 py-4 text-lg rounded-md transition-colors">
-                        Analyze Global Markets
-                    </button>
-                </div>
 
-                {/* Map Container */}
+                {/* MAP */}
                 <div className="relative w-full max-w-[1200px] h-[420px] md:h-[520px] mx-auto">
-                    <div className="relative w-full h-full  rounded-xl overflow-hidden ">
-                        <canvas
-                            ref={canvasRef}
-                            className="absolute inset-0 w-full h-full"
-                        />
+                    <div className="relative w-full h-full  rounded-xl overflow-hidden">
 
-                        {/* Data Cards */}
-                        <DataCard
-                            city="New York"
-                            value="5.4%"
-                            trend="+0.8%"
-                            position="left-[20%] top-[18%]"
-                            delay="0s"
-                        />
-                        <DataCard
-                            city="London"
-                            value="4.1%"
-                            trend="+1.2%"
-                            position="left-[44%] top-[6%]"
-                            delay="0.2s"
-                        />
-                        <DataCard
-                            city="Dubai"
-                            value="6.8%"
-                            trend="+1.5%"
-                            position="left-[58%] top-[28%]"
-                            delay="0.35s"
-                        />
-                        <DataCard
-                            city="Singapore"
-                            value="5.2%"
-                            trend="+0.8%"
-                            position="right-[15%] top-[46%]"
-                            delay="0.5s"
-                        />
+                        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+
+                        {/* DATA CARDS */}
+                        <DataCard city="New York" value="5.4%" trend="+0.8%" position="left-[20%] top-[18%]" delay="0s" />
+                        <DataCard city="London" value="4.1%" trend="+1.2%" position="left-[44%] top-[6%]" delay="0.2s" />
+                        <DataCard city="Dubai" value="6.8%" trend="+1.5%" position="left-[58%] top-[28%]" delay="0.35s" />
+                        <DataCard city="Singapore" value="5.2%" trend="+0.8%" position="right-[15%] top-[46%]" delay="0.5s" />
+
                     </div>
                 </div>
             </div>
         </div>
     );
-};
-
-interface DataCardProps {
-    city: string;
-    value: string;
-    trend: string;
-    position: string;
-    delay: string;
 }
 
-const DataCard: React.FC<DataCardProps> = ({ city, value, trend, position, delay }) => {
-    return (
-        <div
-            className={`absolute z-20 opacity-0 animate-[cardEnter_0.4s_ease-out_forwards] ${position}`}
-            style={{ animationDelay: delay }}
-        >
-            <div className="bg-[#05080f] border border-white/12 rounded-lg px-3.5 py-2.5 min-w-[100px] transition-all duration-200 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:border-sky-400/40 hover:-translate-y-0.5">
-                <div className="flex items-center gap-1.5 mb-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(56,189,248,1)]" />
-                    <span className="text-[11px] font-semibold text-white">{city}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                    <span className="font-mono text-lg font-semibold text-cyan-400">{value}</span>
-                    <span className="inline-flex items-center gap-0.5 font-mono text-[10px] font-medium text-emerald-400">
-            <svg width="8" height="8" viewBox="0 0 8 8">
-              <path d="M4 1L7 5H1L4 1Z" fill="currentColor"/>
-            </svg>
-                        {trend}
-          </span>
-                </div>
-            </div>
-            <div className="absolute w-px bg-gradient-to-b from-[#4a9ff5] to-transparent left-1/2 -translate-x-1/2 top-full h-8" />
-        </div>
-    );
-};
+/* ================= CARD ================= */
 
-export default MapVisualization;
+const DataCard: React.FC<DataCardProps> = ({
+                                               city,
+                                               value,
+                                               trend,
+                                               position,
+                                               delay,
+                                           }) => (
+    <div
+        className={`absolute z-20 opacity-0 animate-[cardEnter_0.4s_ease-out_forwards] ${position}`}
+        style={{ animationDelay: delay }}
+    >
+        <div className="bg-[#05080f] border border-white/12 rounded-lg px-3.5 py-2.5 shadow-lg">
+            <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                <span className="text-[11px] font-semibold text-white">{city}</span>
+            </div>
+
+            <div className="flex items-center gap-1.5">
+        <span className="font-mono text-lg font-semibold text-cyan-400">
+          {value}
+        </span>
+                <span className="text-[10px] font-medium text-emerald-400">
+          {trend}
+        </span>
+            </div>
+        </div>
+    </div>
+);

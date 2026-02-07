@@ -14723,7 +14723,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <div className="relative min-h-screen w-full pt-[112px] overflow-hidden bg-[#05080f]">
+        <div className="relative min-h-screen w-full pt-[112px] overflow-hidden bg-[#0a1532]">
             <div className="container relative z-10 pt-10 pb-16 mx-auto px-4">
                 <div className="text-center max-w-4xl mx-auto mb-12">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 font-bold">

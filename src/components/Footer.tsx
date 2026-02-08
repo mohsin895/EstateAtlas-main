@@ -60,7 +60,7 @@ const Footer = () => {
                     </div>
 
                     {/* Third Column: Legal Links (Right) */}
-                    <div className="justify-self-end text-left">
+                    <div className="justify-self-center text-left">
                         <h4 className="font-heading text-primary-foreground mb-4">Legal</h4>
                         <ul className="space-y-2">
                             <li><a href="#" className="text-primary-foreground/60 hover:text-primary-foreground text-sm">Terms of Service</a></li>

@@ -68,6 +68,7 @@ body {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
+    --dot-color: #4a9ff5;
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
@@ -154,3 +155,37 @@ body {
         transform: translateY(0) scale(1);
     }
 }
+/* Pin colors */
+.pin-green {
+    @apply bg-green-500 shadow-lg shadow-green-500/50;
+}
+
+.pin-amber {
+    @apply bg-amber-500 shadow-lg shadow-amber-500/50;
+}
+
+.pin-emerald {
+    @apply bg-emerald-500 shadow-lg shadow-emerald-500/50;
+}
+
+.pin-red {
+    @apply bg-red-500 shadow-lg shadow-red-500/50;
+}
+.card-connector {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(180deg, var(--dot-color) 0%, transparent 100%);
+    left: 50%;
+    transform: translateX(-50%);
+}
+.card-newyork { left: 20%; top: 18%; }
+.card-newyork .card-connector { height: 32px; top: 100%; }
+
+.card-london { left: 44%; top: 6%; }
+.card-london .card-connector { height: 38px; top: 100%; }
+
+.card-dubai { left: 58%; top: 28%; }
+.card-dubai .card-connector { height: 28px; top: 100%; }
+
+.card-singapore { right: 15%; top: 46%; }
+.card-singapore .card-connector { height: 30px; top: 100%; left: 30%; }

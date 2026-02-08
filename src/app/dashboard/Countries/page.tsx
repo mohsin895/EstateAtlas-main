@@ -1,223 +1,265 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Search, Plus } from "lucide-react";
+import { Search, ChevronDown, Plus,TrendingUp, User   } from "lucide-react";
+import TenYearHistory from "@/components/TenYearHistory";
+import MacroAndTaxes from "@/components/MacroAndTaxes";
 const Countries = () => {
   return (
-    <div>
-
-{/* save country section */}
-
-     <div className="w-full mt-10 max-w-5xl mx-auto p-6 bg-gray-50 border rounded-lg">
-     <div className="flex flex-col md:flex-row gap-6 items-center md:items-end">
-  
-  <div className="w-full md:flex-1 space-y-2">
-    <Label className="text-sm font-medium text-gray-900 flex items-center gap-2">
-      <div className="w-3 h-3 bg-gray-900 rounded-sm"></div>
-      Select Country
-    </Label>
-    <div className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-6" />
-      <Input
-        placeholder="Search for a country..."
-        className="pl-10 h-12 w-full bg-white border-gray-200 text-gray-500 placeholder:text-gray-400"
-      />
-    </div>
-  </div>
-
-  {/* Time Period Select */}
-  <div className="w-full md:flex-1 space-y-2">
-    <Label className="text-sm font-medium text-gray-900 flex items-center gap-2">
-      <div className="w-3 h-3 bg-gray-900 rounded-sm"></div>
-      Time Period
-    </Label>
-    <Select defaultValue="last-12-months">
-      <SelectTrigger className="h-12 w-full pl-10 py-6 bg-white border-gray-200">
-        <SelectValue placeholder="Select time period" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="last-12-months">Last 12 Months</SelectItem>
-        <SelectItem value="last-6-months">Last 6 Months</SelectItem>
-        <SelectItem value="last-3-months">Last 3 Months</SelectItem>
-        <SelectItem value="last-month">Last Month</SelectItem>
-      </SelectContent>
-    </Select>
-  </div>
-
-  {/* Save Button */}
-  <div className="w-full md:w-auto">
-    <Button className="h-12 w-full md:w-auto px-6 bg-slate-800 hover:bg-slate-700 text-white font-medium">
-      <Plus className="w-4 h-4 mr-2" />
-      Save Country
-    </Button>
-  </div>
-</div>
-
-    </div>
 
 
-    {/* 📈 Market Analysis - 🇦🇩 Andorra */}
-    <div className="w-full mt-10 max-w-5xl mx-auto p-6 bg-white border rounded-lg shadow-md grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 justify-between items-center gap-6  ">
-        <div className=" w-full border-t-3 border-blue-400 shadow-lg p-6 rounded-2xl">
-            <h4 className="text-[#4F4F58EB] text-center">ANNUAL GROWTH</h4>
-            <h1 className="text-4xl font-bold text-center text-[#3BA1DF] ">5.2 %</h1>
+      <div className="w-full max-w-5xl mx-auto    rounded-lg ">
+          <div className=" rounded-lg  bg-white border border-gray-200 p-4">
+              <div className="flex flex-col lg:flex-row items-center gap-4">
 
-        </div>
-        <div className=" w-full border-t-3 border-blue-400 shadow-lg p-6 rounded-2xl">
-            <h4 className="text-[#4F4F58EB] text-center">Avg Property Price</h4>
-            <h1 className="text-4xl font-bold text-center text-[#3BA1DF] ">€450K</h1>
+                  {/* Left Section */}
+                  <div className="flex flex-col sm:flex-row bg-white items-center gap-4 flex-1 w-full">
 
-        </div>
-       <div className=" w-full border-t-3 border-blue-400 shadow-lg p-6 rounded-2xl">
-            <h4 className="text-[#4F4F58EB] text-center">Rental Yield</h4>
-            <h1 className="text-4xl font-bold text-center text-[#3BA1DF] ">3.8%</h1>
+                      {/* Search */}
+                      <div className="relative flex-1 w-full">
+                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
 
-        </div>
-       <div className=" w-full border-t-3 border-blue-400 shadow-lg p-6 rounded-2xl">
-            <h4 className="text-[#4F4F58EB] text-center">Market Score</h4>
-            <h1 className="text-4xl font-bold text-center text-[#3BA1DF] ">85</h1>
+                          <input
+                              type="text"
+                              placeholder="Search for a country..."
+                              className="h-10 w-full rounded-md border border-gray-300 bg-white px-3 pl-10 text-sm
+              focus:outline-none focus:ring-2 focus:ring-[#071636]"
+                          />
+                      </div>
 
-        </div>
+                      {/* Dropdown */}
+                      <button
+                          type="button"
+                          className="flex h-10 items-center justify-between rounded-md border border-gray-300
+            px-3 py-2 text-sm w-full sm:w-[180px] bg-white
+            focus:outline-none focus:ring-2 focus:ring-[#071636]"
+                      >
+                          <span>Last 12 Months</span>
+                          <ChevronDown className="h-4 w-4 opacity-60" />
+                      </button>
+                  </div>
 
+                  {/* Right Section */}
+                  <div className="flex flex-col bg-white sm:flex-row items-center gap-4">
 
+                      {/* Property Type Tabs */}
+                      <div className="inline-flex rounded-full bg-gray-100 p-1">
 
+                          <button className="px-4 py-2 text-sm font-medium rounded-full text-gray-500 hover:text-gray-800 transition">
+                              All Properties
+                          </button>
 
-    </div>
+                          <button className="px-4 py-2 text-sm font-medium rounded-full bg-[#071636] text-white ">
+                              Houses
+                          </button>
 
+                          <button className="px-4 py-2 text-sm font-medium rounded-full text-gray-500 hover:text-gray-800 transition">
+                              Apartments
+                          </button>
 
+                      </div>
 
+                      {/* Save Button */}
+                      <button
+                          className="inline-flex items-center gap-2 h-10 px-4 py-2 rounded-md
+            bg-[#071636] hover:bg-[#071636]/90 text-white text-sm font-medium
+            w-full sm:w-auto transition"
+                      >
+                          <Plus className="h-4 w-4" />
+                          Save Country
+                      </button>
 
-    {/*  Expert Market Summary */}
+                  </div>
 
-    <div className="w-full mt-10 max-w-5xl mx-auto p-6  border rounded-lg  bg-white shadow-lg border-t-4 border-t-blue-500">
+              </div>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
 
-      <h1 className="text-2xl font-semibold">👨‍💼  Expert Market Summary</h1>
+              {/* Score Card */}
+              <div className=" rounded-lg border bg-white border-gray-200 shadow-sm p-6 ">
 
+                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 text-center">
+                      Estate Atlas Score
+                  </h3>
 
+                  <div className="flex flex-col items-center">
 
-      <div className="bg-[#F4FAFD] p-6 rounded-lg mt-4 border-l-4 border-l-blue-500 shadow-md">
-        <p className="text-gray-600 mt-4">
-          The expert market summary provides a comprehensive overview of the
-          current market conditions, including key indicators, trends, and
-          forecasts. It is designed to help investors and analysts make informed
-          decisions based on the latest data and expert insights.
-        </p>
+                      <svg width="200" height="110" viewBox="0 0 200 110" className="overflow-visible">
+
+                          {/* Background Arc */}
+                          <path
+                              d="M 20 100 A 80 80 0 0 1 180 100"
+                              fill="none"
+                              stroke="#e5e7eb"
+                              strokeWidth="12"
+                              strokeLinecap="round"
+                          />
+
+                          {/* Progress Arc */}
+                          <path
+                              d="M 20 100 A 80 80 0 0 1 180 100"
+                              fill="none"
+                              stroke="#22c55e"
+                              strokeWidth="12"
+                              strokeLinecap="round"
+                              strokeDasharray="213 251"
+                              style={{ transition: "stroke-dasharray 0.5s ease-in-out" }}
+                          />
+
+                          {/* Score */}
+                          <text
+                              x="100"
+                              y="85"
+                              textAnchor="middle"
+                              className="text-3xl font-bold fill-[#071636]"
+                          >
+                              85
+                          </text>
+
+                          <text
+                              x="100"
+                              y="102"
+                              textAnchor="middle"
+                              className="text-xs fill-gray-500"
+                          >
+                              / 100
+                          </text>
+
+                      </svg>
+
+                  </div>
+
+                  <p className="text-xs text-gray-400 text-center mt-4">
+                      Calculated from Yield, Growth, Tax, and Risk metrics.
+                  </p>
+
+              </div>
+
+              {/* Metrics */}
+              <div className="lg:col-span-2 bg-white shadow-sm rounded-lg border border-gray-200 p-6 ">
+
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4 h-full">
+
+                      {/* Annual Growth */}
+                      <div className="flex flex-col justify-center">
+            <span className="text-xs font-semibold text-gray-400 uppercase">
+              Annual Growth
+            </span>
+
+                          <div className="flex items-center gap-2  flex-wrap">
+              <span className="font-bold text-lg md:text-xl text-sky-600">
+                5.2%
+              </span>
+                              <TrendingUp className="h-4 w-4 text-green-500" />
+                          </div>
+                      </div>
+
+                      {/* Median Asking Price */}
+                      <div className="flex flex-col justify-center">
+            <span className="text-xs font-semibold text-gray-400 uppercase">
+              Median Asking Price
+            </span>
+
+                          <div className="flex items-center gap-2 mt-2 flex-wrap">
+              <span className="font-bold text-lg md:text-xl text-sky-600">
+                €450K
+              </span>
+                              <TrendingUp className="h-4 w-4 text-green-500" />
+                          </div>
+                      </div>
+
+                      {/* Avg Sq. Meter Price */}
+                      <div className="flex flex-col justify-center">
+            <span className="text-xs font-semibold text-gray-400 uppercase">
+              Avg Sq. Meter Price
+            </span>
+
+                          <div className="mt-2">
+              <span className="font-bold text-lg md:text-xl text-sky-600">
+                €4,200 / m²
+              </span>
+                          </div>
+                      </div>
+
+                      {/* Rental Yield */}
+                      <div className="flex flex-col justify-center">
+            <span className="text-xs font-semibold text-gray-400 uppercase">
+              Rental Yield
+            </span>
+
+                          <div className="mt-2">
+              <span className="font-bold text-lg md:text-xl text-sky-600">
+                3.8%
+              </span>
+                          </div>
+
+                          <span className="inline-flex mt-1.5 w-fit rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-800">
+              RATING: MODERATE
+            </span>
+                      </div>
+
+                      {/* Price-to-Rent Ratio */}
+                      <div className="flex flex-col justify-center">
+            <span className="text-xs font-semibold text-gray-400 uppercase">
+              Price-to-Rent Ratio
+            </span>
+
+                          <div className="mt-2">
+              <span className="font-bold text-lg md:text-xl text-sky-600">
+                18.5
+              </span>
+                          </div>
+
+                          <span className="text-xs font-medium text-green-600 mt-1">
+              BUY Signal
+            </span>
+                      </div>
+
+                  </div>
+
+              </div>
+
+          </div>
+
+          <div className="bg-white rounded-lg border mt-4 border-gray-200 p-6 shadow-sm">
+
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-4">
+
+                  <div className="h-10 w-10 rounded-full bg-sky-100 flex items-center justify-center">
+                      <User className="h-5 w-5 text-sky-600" />
+                  </div>
+
+                  <div>
+                      <h3 className="font-semibold text-lg text-[#071636]">
+                          Expert Market Summary
+                      </h3>
+
+                      <span className="text-xs text-gray-400 uppercase tracking-wider">
+            Quarterly Report Insight
+          </span>
+                  </div>
+
+              </div>
+
+              {/* Content */}
+              <div className="bg-sky-50 border-l-4 border-sky-500 rounded-r-lg p-4">
+
+                  <p className="text-gray-700 leading-relaxed">
+                      Andorra presents a unique investment opportunity as Europe's
+                      sixth-smallest nation. Nestled in the Pyrenees mountains between
+                      France and Spain, this microstate offers a compelling combination of
+                      political stability, favorable tax policies, and a growing luxury real
+                      estate market. With limited land availability driving premium
+                      valuations, property investments here have shown consistent
+                      appreciation over the past decade.
+                  </p>
+
+              </div>
+
+          </div>
+
+          <TenYearHistory />
+          <MacroAndTaxes />
       </div>
-
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold">🏛️  Political Stability</h2>
-          <p className="text-gray-600 mt-2">
-            Constitutional parliamentary democracy with stable governance
-          </p>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold">💰  Tax Benefits</h2>
-          <p>Maximum personal income tax of 10%, no inheritance tax</p>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold">🏠  Market Focus</h2>
-          <p className="text-gray-600 mt-2">
-           Luxury properties and ski resorts dominate the market
-          </p>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold">🌍  Investment Climate:</h2>
-          <p className="text-gray-600 mt-2">
-          Foreign ownership allowed with residency requirements
-          </p>
-        </div>
-
-      </div>
-
-
-
-
-
-
-    </div>
-
-
-    {/* Interactive Price History Chart */}
-
-    <div className="w-full mt-10 max-w-5xl mx-auto p-6  border rounded-lg  bg-white shadow-lg border-t-4 border-t-blue-500">
-        <h1 className="text-2xl font-semibold">📈 Interactive Price History Chart</h1>
-    
-        <div className="mt-4">
-            <p className="text-gray-600">
-            The interactive price history chart allows users to explore historical
-            price data for various assets, providing insights into market trends
-            and performance over time.
-            </p>
-        </div>
-    
-        <div className="mt-6">
-            {/* Placeholder for the chart component */}
-            <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
-            <span className="text-gray-500">Chart will be displayed here</span>
-            </div>
-        </div>
-
-    </div>
-
-
-
-    {/* 📊 Country Statistics & Insights */}
-    <div className="w-full mt-10 max-w-5xl mx-auto p-6  border rounded-lg  bg-white shadow-lg border-t-4 border-t-blue-500">
-      <h1 className="text-2xl font-semibold">📊 Country Statistics & Insights</h1>
-
-      <div className="mt-4">
-        <p className="text-gray-600">
-          This section provides detailed statistics and insights about the
-          selected country, including economic indicators, demographic data, and
-          market trends.
-        </p>
-      </div>
-        <div className="  space-y-4 mt-4">
-          <Label className="text-sm font-semibold text-gray-900 flex items-center gap-2">
-            Select Analysis Type
-        
-          </Label>
-          <Select defaultValue="last-12-months">
-            <SelectTrigger className="h-20 pl-10 py-6 px-10 bg-white border-gray-200">
-              <SelectValue placeholder="Select time period" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="last-12-months">Last 12 Months</SelectItem>
-              <SelectItem value="last-6-months">Last 6 Months</SelectItem>
-              <SelectItem value="last-3-months">Last 3 Months</SelectItem>
-              <SelectItem value="last-month">Last Month</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="bg-[#F4FAFD] p-6 border border-blue-400 rounded-lg mt-4 ">
-        <p className="text-gray-600 mt-4">
-          The expert market summary provides a comprehensive overview of the
-          current market conditions, including key indicators, trends, and
-          forecasts. It is designed to help investors and analysts make informed
-          decisions based on the latest data and expert insights.
-        </p>
-      </div>
-
-
-   
-      </div>
-
-
-
-    </div>
   );
 };
 

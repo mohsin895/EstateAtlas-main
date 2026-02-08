@@ -1,118 +1,170 @@
 "use client";
-import Cookies from 'js-cookie';
+
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FC } from "react";
-import logo from "../../public/logo.png"
-import { Calculator, ChartBarStacked, ChartNoAxesCombined, ChartPie, CreditCard, FileChartColumn,  Globe, Headset, LogOut, Save, UserCog, Users } from 'lucide-react';
-const Sidebar: FC = () => {
-  const router = useRouter();
-const { setUser } = useUser();
+import { usePathname } from "next/navigation";
 
+import {
+    Globe,
+    BarChart3,
+    Map,
+    Bookmark,
+    Calculator,
+    Scale,
+    Users,
+    Settings,
+    CreditCard,
+    Headphones,
+    LogOut,
+    Crown,
+} from "lucide-react";
 
-const handleLogout = async () => {
-  try {
-    const token = Cookies.get('token');
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/logout`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+const Sidebar: React.FC = () => {
+    const pathname = usePathname();
 
-    if (!res.ok) {
-      console.error("Logout failed");
-    }
-  } catch (err) {
-    console.error("Logout error:", err);
-  } finally {
-    Cookies.remove("token");
-    Cookies.remove("user");
-    setUser(null);
-    router.push("/auth/login");
-  }
+    const isActive = (path: string) => pathname === path;
+
+    const linkClasses = (path: string) =>
+        `flex items-center gap-3 px-3 py-2.5 rounded-md transition
+     ${
+            isActive(path)
+                ? "bg-[#071636] text-white"
+                : "text-dark-gray hover:bg-gray-100"
+        }`;
+
+    return (
+        <aside className="hidden lg:flex flex-col bg-white w-[260px] border-r border-gray-200 fixed h-full">
+            <div className="flex flex-col h-full">
+
+                {/* Logo */}
+                <div className="p-6 border-b border-gray-200">
+
+                    <img src="/logo.png" alt="Estate Atlas" className="h-12" />
+                </div>
+
+                {/* Navigation */}
+                <nav className="flex-1 overflow-y-auto p-4 space-y-6">
+
+                    {/* Main Menu */}
+                    <div>
+                        <h3 className="px-3 mb-2 text-sm font-semibold text-gray-400 uppercase">
+                            Main Menu
+                        </h3>
+
+                        <div className="space-y-1 text-sm">
+                            <Link href="/dashboard/Countries" className={linkClasses("/dashboard/Countries")}>
+                                <Globe className="h-5 w-5" />
+                                <span>All Countries</span>
+                            </Link>
+
+                            <Link
+                                href="/dashboard/global-data"
+                                className={linkClasses("/dashboard/global-data")}
+                            >
+                                <BarChart3 className="h-5 w-5" />
+                                <span>Global Data</span>
+                            </Link>
+
+                            <Link
+                                href="/dashboard/regional-data"
+                                className={linkClasses("/dashboard/regional-data")}
+                            >
+                                <Map className="h-5 w-5" />
+                                <span>Regional / City Data</span>
+                            </Link>
+
+                            <Link
+                                href="/dashboard/saved-countries"
+                                className={linkClasses("/dashboard/saved-countries")}
+                            >
+                                <Bookmark className="h-5 w-5" />
+                                <span>Saved Countries</span>
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Investments */}
+                    <div>
+                        <h3 className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase">
+                            Investments
+                        </h3>
+
+                        <div className="space-y-1 text-sm">
+                            <Link
+                                href="/dashboard/calculator"
+                                className={linkClasses("/dashboard/calculator")}
+                            >
+                                <Calculator className="h-5 w-5" />
+                                <span>Investment Calculator</span>
+                            </Link>
+
+                            <Link
+                                href="/dashboard/comparison"
+                                className={linkClasses("/dashboard/comparison")}
+                            >
+                                <Scale className="h-5 w-5" />
+                                <span>Comparison Tool</span>
+                                <Crown className="h-4 w-4 text-amber-500 ml-auto" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Settings */}
+                    <div>
+                        <h3 className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase">
+                            Settings
+                        </h3>
+
+                        <div className="space-y-1 text-sm">
+                            <Link
+                                href="/dashboard/affiliate"
+                                className={linkClasses("/dashboard/affiliate")}
+                            >
+                                <Users className="h-5 w-5" />
+                                <span>Affiliate Dashboard</span>
+                                <Crown className="h-4 w-4 text-amber-500 ml-auto" />
+                            </Link>
+
+                            <Link
+                                href="/dashboard/settings"
+                                className={linkClasses("/dashboard/settings")}
+                            >
+                                <Settings className="h-5 w-5" />
+                                <span>Account Settings</span>
+                            </Link>
+
+                            <Link
+                                href="/dashboard/billing"
+                                className={linkClasses("/dashboard/billing")}
+                            >
+                                <CreditCard className="h-5 w-5" />
+                                <span>Billing</span>
+                            </Link>
+
+                            <Link
+                                href="/dashboard/support"
+                                className={linkClasses("/dashboard/support")}
+                            >
+                                <Headphones className="h-5 w-5" />
+                                <span>Support</span>
+                            </Link>
+                        </div>
+                    </div>
+
+                </nav>
+
+                {/* Logout */}
+                <div className="p-4 border-t border-gray-200">
+                    <button className="flex items-center gap-3 px-3 py-2.5 rounded-md text-dark-gray hover:bg-gray-100 w-full">
+                        <LogOut className="h-5 w-5" />
+                        <span>Log Out</span>
+                    </button>
+                </div>
+
+            </div>
+        </aside>
+    );
 };
-
-  return (
-    <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r dark:bg-gray-900 dark:border-gray-700">
-      <Link href="/" className="flex items-center space-x-2">
-        <Image
-          src={logo}
-          alt="EstateAtlas Logo"
-          width={220}
-          height={28}
-        />
-        
-      </Link>
-
-      <div className="flex flex-col justify-between flex-1 mt-6">
-        <nav className="-mx-3 space-y-6">
-          {/* Main Menu */}
-          <div className="space-y-3">
-            <label className="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">
-              Main Menu
-            </label>
-
-            <NavItem href="Countries" label="All Countries" icon=  {<Globe />} />
-            <NavItem href="globaldata" label="Global Data" icon={    <ChartNoAxesCombined />} />
-            <NavItem href="Regional" label="Regional/City Data" icon={  <FileChartColumn/>} />
-            <NavItem href="Reports" label="Quarterly Reports" icon={    <ChartPie/>} />
-            <NavItem href="SavedCountries" label="Saved Countries" icon={    <Save/>}/>
-          </div>
-
-          {/* Investments */}
-          <div className="space-y-3">
-            <label className="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">
-              Investments
-            </label>
-
-            <NavItem href="InvestCalculator" label="Investment Calculator" icon={    <Calculator/>} />
-            <NavItem href="comparison" label="Comparison Tool" icon={    <ChartBarStacked/>} />
-          </div>
-          
-
-          {/* Settings */}
-          <div className="space-y-3">
-            <label className="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">
-              Settings
-            </label>
-
-            <NavItem href="affiliate " label="Affiliate Dashboard" icon={    <Users />} />
-            <NavItem href="accountSettings" label="Account Settings" icon={    <UserCog/>} />
-            <NavItem href="billing" label="Billing" icon={    <CreditCard />} />
-            <NavItem href="support" label="Support" icon=  {<Headset />} />
-            <NavItem href ="" label="Log Out" icon={    <LogOut onClick={handleLogout}  />} />
-          </div>
-        </nav>
-      </div>
-    </aside>
-  );
-};
-
-import { ReactNode } from "react";
-import { useUser } from "@/app/context/UserContext";
-import { useRouter } from "next/navigation";
-
-interface NavItemProps {
-  href: string;
-  label: string;
-  icon: ReactNode;
-  active?: boolean;
-}
-
-const NavItem: FC<NavItemProps> = ({ href, label, icon, active }) => (
-  <Link
-    href={href}
-    className={`flex items-center px-3 py-2 text-sm font-medium transition-colors duration-300 transform rounded-lg ${
-      active
-        ? "bg-gray-900 text-white dark:text-white"
-        : "text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-white"
-    }`}
-  >
-    <span className="text-sm ">{icon}</span>
-    <span className="mx-2">{label}</span>
-  </Link>
-);
 
 export default Sidebar;

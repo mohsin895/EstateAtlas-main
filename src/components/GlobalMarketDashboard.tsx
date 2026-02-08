@@ -143,7 +143,7 @@ const GlobalMarketDashboard: React.FC = () => {
                             <td className="px-4 py-2 text-center">
                                 <div
                                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold border ${getScoreBadgeColor(
-                                        row.estateAtlasScore
+                                        row.estateAtlasScore ?? 0
                                     )}`}
                                 >
                                     {row.estateAtlasScore}
@@ -199,7 +199,7 @@ const GlobalMarketDashboard: React.FC = () => {
                                 {row.flag} {row.country}
                             </td>
                             <td className="px-4 py-2 text-center">
-                                <div className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${getBadgeColor(row.legalSystem)}`}>
+                                <div className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${getBadgeColor(row.legalSystem ?? "")}`}>
                                     {row.legalSystem}
                                 </div>
                             </td>

@@ -25,11 +25,11 @@ const ChartCard: React.FC<ChartCardProps> = ({ title, data, lines }) => {
         <div className="rounded-lg border text-card-foreground shadow-sm bg-white border-gray-200">
             <div className="flex flex-col space-y-1.5 p-6 pb-3">
                 <div className="flex items-center justify-between">
-                    <h3 className="font-semibold tracking-tight font-heading text-lg text-navy">{title}</h3>
+                    <h3 className="font-semibold tracking-tight font-heading text-lg text-[#1F2D4A]">{title}</h3>
                     <div className="flex bg-muted rounded-full p-0.5">
                         <button
                             className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
-                                view === "chart" ? "bg-navy text-white" : "text-muted-foreground hover:text-foreground"
+                                view === "chart" ? "bg-[#1F2D4A] text-white" : "text-muted-foreground hover:text-foreground"
                             }`}
                             onClick={() => setView("chart")}
                         >
@@ -37,7 +37,7 @@ const ChartCard: React.FC<ChartCardProps> = ({ title, data, lines }) => {
                         </button>
                         <button
                             className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
-                                view === "table" ? "bg-navy text-white" : "text-muted-foreground hover:text-foreground"
+                                view === "table" ? "bg-[#1F2D4A] text-white" : "text-muted-foreground hover:text-foreground"
                             }`}
                             onClick={() => setView("table")}
                         >

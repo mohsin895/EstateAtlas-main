@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 overflow-y-auto p-4 space-y-6">
+                <nav className="flex-1 overflow-y-auto p-2 space-y-6">
 
                     {/* Main Menu */}
                     <div>
@@ -92,8 +92,8 @@ const Sidebar: React.FC = () => {
 
                         <div className="space-y-1 text-sm">
                             <Link
-                                href="/dashboard/calculator"
-                                className={linkClasses("/dashboard/calculator")}
+                                href="/dashboard/investment-calculator"
+                                className={linkClasses("/dashboard/investment-calculator")}
                             >
                                 <Calculator className="h-5 w-5" />
                                 <span>Investment Calculator</span>
@@ -116,13 +116,13 @@ const Sidebar: React.FC = () => {
                             Settings
                         </h3>
 
-                        <div className="space-y-1 text-sm">
+                        <div className="space-y-1 font-[500] text-sm">
                             <Link
                                 href="/dashboard/affiliate"
                                 className={linkClasses("/dashboard/affiliate")}
                             >
                                 <Users className="h-5 w-5" />
-                                <span>Affiliate Dashboard</span>
+                                <span className="flex-1">Affiliate Dashboard</span>
                                 <Crown className="h-4 w-4 text-amber-500 ml-auto" />
                             </Link>
 

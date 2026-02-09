@@ -48,7 +48,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <div className="flex-1 flex flex-col overflow-hidden">
 
                 {/* Header */}
-                <header className="flex items-center gap-4 px-4 py-3 border-b dark:border-gray-700">
+                <header className="flex items-center gap-4  border-b dark:border-gray-700">
 
                     {/* Mobile Menu Button */}
                     <button

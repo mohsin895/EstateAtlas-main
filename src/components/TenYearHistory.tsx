@@ -60,7 +60,7 @@ export default function TenYearHistory() {
                 ) : (
                     <DataTable
                         data={priceData}
-                        headers={["Year", "Listing Price", "Inflation Adjusted"]}
+                        headers={["Year", "Listing Price", "Inflation Adjusted", "YoY Change"]}
                         keys={["year", "listing", "adjusted"]}
                         prefix="€"
                         suffix="K"
@@ -79,7 +79,7 @@ export default function TenYearHistory() {
                 ) : (
                     <DataTable
                         data={rentData}
-                        headers={["Year", "Nominal Rent", "Inflation Adjusted"]}
+                        headers={["Year", "Nominal Rent", "Inflation Adjusted", "YoY Change"]}
                         keys={["year", "nominal", "adjusted"]}
                         prefix="€"
                     />
@@ -107,34 +107,19 @@ function HistoryCard({
         <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
 
             <div className="flex items-center justify-between mb-6">
-
-                <h3 className="font-semibold text-lg text-[#071636]">
-                    {title}
-                </h3>
+                <h3 className="font-semibold text-lg text-[#071636]">{title}</h3>
 
                 <div className="flex bg-gray-100 rounded-full p-0.5">
-
-                    <ToggleButton
-                        active={view === "chart"}
-                        onClick={() => setView("chart")}
-                    >
+                    <ToggleButton active={view === "chart"} onClick={() => setView("chart")}>
                         Chart
                     </ToggleButton>
-
-                    <ToggleButton
-                        active={view === "table"}
-                        onClick={() => setView("table")}
-                    >
+                    <ToggleButton active={view === "table"} onClick={() => setView("table")}>
                         Table
                     </ToggleButton>
-
                 </div>
-
             </div>
 
-            <div className="h-72">
-                {children}
-            </div>
+            <div className="h-72">{children}</div>
 
         </div>
     );
@@ -155,10 +140,7 @@ function ToggleButton({
         <button
             onClick={onClick}
             className={`px-3 py-1 text-xs font-medium rounded-full transition-colors
-        ${active
-                ? "bg-[#071636] text-white"
-                : "text-gray-500 hover:text-gray-800"
-            }`}
+        ${active ? "bg-[#071636] text-white" : "text-gray-500 hover:text-gray-800"}`}
         >
             {children}
         </button>
@@ -171,32 +153,13 @@ function PriceChart() {
     return (
         <ResponsiveContainer width="100%" height="100%">
             <LineChart data={priceData}>
-
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" />
                 <YAxis tickFormatter={(v) => `€${v}K`} />
                 <Tooltip />
                 <Legend />
-
-                <Line
-                    type="monotone"
-                    dataKey="listing"
-                    name="Listing Price"
-                    stroke="#3ba1df"
-                    strokeWidth={2}
-                    dot
-                />
-
-                <Line
-                    type="monotone"
-                    dataKey="adjusted"
-                    name="Inflation-Adjusted"
-                    stroke="#071636"
-                    strokeWidth={2}
-                    strokeDasharray="5 5"
-                    dot
-                />
-
+                <Line type="monotone" dataKey="listing" name="Listing Price" stroke="#3ba1df" strokeWidth={2} dot />
+                <Line type="monotone" dataKey="adjusted" name="Inflation-Adjusted" stroke="#071636" strokeWidth={2} strokeDasharray="5 5" dot />
             </LineChart>
         </ResponsiveContainer>
     );
@@ -206,38 +169,19 @@ function RentChart() {
     return (
         <ResponsiveContainer width="100%" height="100%">
             <LineChart data={rentData}>
-
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" />
                 <YAxis tickFormatter={(v) => `€${v}`} />
                 <Tooltip />
                 <Legend />
-
-                <Line
-                    type="monotone"
-                    dataKey="nominal"
-                    name="Nominal Rent"
-                    stroke="#3ba1df"
-                    strokeWidth={2}
-                    dot
-                />
-
-                <Line
-                    type="monotone"
-                    dataKey="adjusted"
-                    name="Inflation-Adjusted"
-                    stroke="#071636"
-                    strokeWidth={2}
-                    strokeDasharray="5 5"
-                    dot
-                />
-
+                <Line type="monotone" dataKey="nominal" name="Nominal Rent" stroke="#3ba1df" strokeWidth={2} dot />
+                <Line type="monotone" dataKey="adjusted" name="Inflation-Adjusted" stroke="#071636" strokeWidth={2} strokeDasharray="5 5" dot />
             </LineChart>
         </ResponsiveContainer>
     );
 }
 
-/* ------------------ TABLE ------------------ */
+/* ------------------ STYLED TABLE ------------------ */
 
 function DataTable({
                        data,
@@ -252,42 +196,71 @@ function DataTable({
     prefix?: string;
     suffix?: string;
 }) {
+    // compute YoY changes for the last column
+    const dataWithYoY = data.map((row, idx) => {
+        if (idx === 0) return { ...row, yoy: "—" };
+        const prev = data[idx - 1];
+        const key = keys[1]; // main value
+        const change = ((row[key] - prev[key]) / prev[key]) * 100;
+        return { ...row, yoy: `${change >= 0 ? "+" : ""}${change.toFixed(1)}%` };
+    });
+
     return (
-        <div className="overflow-x-auto">
-
-            <table className="w-full text-sm border-collapse">
-
-                <thead>
-                <tr className="border-b">
-                    {headers.map((h) => (
-                        <th
-                            key={h}
-                            className="text-left py-2 text-gray-500 font-medium"
-                        >
-                            {h}
-                        </th>
-                    ))}
-                </tr>
-                </thead>
-
-                <tbody>
-                {data.map((row, i) => (
-                    <tr key={i} className="border-b last:border-0">
-
-                        {keys.map((k) => (
-                            <td key={k} className="py-2 text-gray-700">
-                                {k === "year"
-                                    ? row[k]
-                                    : `${prefix}${row[k]}${suffix}`}
-                            </td>
+        <div className="h-72 overflow-auto">
+            <div className="relative w-full overflow-auto">
+                <table className="w-full caption-bottom text-sm">
+                    <thead className="[&_tr]:border-b">
+                    <tr className="border-b transition-colors hover:bg-gray-50">
+                        {headers.map((h, idx) => (
+                            <th
+                                key={idx}
+                                className={`h-12 px-4 align-middle font-medium text-gray-500 ${
+                                    idx === 0 ? "text-left" : "text-right"
+                                }`}
+                            >
+                                {h}
+                            </th>
                         ))}
-
                     </tr>
-                ))}
-                </tbody>
-
-            </table>
-
+                    </thead>
+                    <tbody className="[&_tr:last-child]:border-0">
+                    {dataWithYoY.map((row, i) => {
+                        const isEven = i % 2 === 1;
+                        return (
+                            <tr
+                                key={i}
+                                className={`border-b transition-colors hover:bg-gray-50 ${
+                                    isEven ? "bg-gray-50" : ""
+                                }`}
+                            >
+                                {keys.map((k, idx) => (
+                                    <td
+                                        key={idx}
+                                        className={`p-4 align-middle text-sm ${
+                                            idx === 0 ? "font-medium text-left" : "text-right"
+                                        }`}
+                                    >
+                                        {prefix}{row[k]}{suffix}
+                                    </td>
+                                ))}
+                                {/* YoY column */}
+                                <td
+                                    className={`p-4 align-middle text-sm text-right font-medium ${
+                                        row.yoy === "—"
+                                            ? "text-gray-400"
+                                            : parseFloat(row.yoy) >= 0
+                                                ? "text-green-600"
+                                                : "text-red-600"
+                                    }`}
+                                >
+                                    {row.yoy}
+                                </td>
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

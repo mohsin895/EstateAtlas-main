@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Plus, TrendingUp, Bell } from "lucide-react"
+import MarketAlerts from "@/components/MarketAlerts";
 
 const SavedCountries = () => {
     const countries = [
@@ -153,6 +154,7 @@ const SavedCountries = () => {
         </div>
       </div>
     </div>
+
             
         </div>
     );

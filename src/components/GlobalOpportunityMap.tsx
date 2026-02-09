@@ -7,7 +7,7 @@ export default function GlobalOpportunityMap() {
     const [active, setActive] = useState("Legal Risk");
 
     return (
-        <div className="rounded-lg border text-card-foreground bg-card shadow-sm">
+        <div className="rounded-lg border mt-4 text-card-foreground bg-card shadow-sm">
             <div className="p-6">
 
                 {/* Header */}

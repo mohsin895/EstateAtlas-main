@@ -1,257 +1,155 @@
-"use client"
+// components/PrioritySupportForm.tsx
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Mail, HelpCircle, Heart, Plus, Minus } from "lucide-react"
-import Cookies from 'js-cookie';
-import toast from "react-hot-toast"
+import React, { useState } from "react";
 
-export default function Component() {
-  const [formData, setFormData] = useState({
-    subject: "",
-    priority: "",
-    message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null)
- 
+type SupportCategory = "data-query" | "billing" | "technical" | "feature" | "other";
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    try {
-      const token =  Cookies.get('token');
-      
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/help-support`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          subject: formData.subject,
-          priority: formData.priority,
-          message: formData.message,
-       
-        })
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to submit support request")
-      }
-
-      const data = await response.json()
-      console.log(data)
-      
-     toast.success('Support Request sent')
-
-      // Reset form
-      setFormData({
-        subject: "",
-        priority: "",
-        message: "",
-      })
-
-    } catch (error) {
-      console.log(error)
-     toast.error('someting wrong')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
-
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index)
-  }
-
-  const faqs = [
-    {
-      question: "How often is the data updated?",
-      answer:
-        "Our data is updated in real-time and synchronized every 15 minutes to ensure you have the most current information available.",
-    },
-    {
-      question: "How do I upgrade my subscription?",
-      answer:
-        "You can upgrade your subscription by going to your account settings and selecting the 'Billing' tab. From there, you can choose a new plan that fits your needs.",
-    },
-    {
-      question: "Can I export data and reports?",
-      answer:
-        "Yes, you can export data in various formats including CSV, PDF, and Excel. Premium users also have access to automated report scheduling.",
-    },
-    {
-      question: "Which countries and cities are covered?",
-      answer:
-        "We currently cover over 195 countries and 10,000+ cities worldwide. Our coverage is constantly expanding based on user demand and data availability.",
-    },
-  ]
-
-  return (
-    <div className="md:max-w-5xl mx-auto md:p-6 space-y-6 bg-gray-50 min-h-screen">
-      <div className="space-y-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Help & Support</h1>
-
-        {/* Contact Support Section */}
-        <Card className="border-t-4 border-t-blue-400">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg font-medium text-gray-700">
-              <Mail className="w-5 h-5" />
-              Contact Support
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
-                </label>
-                <Input
-                  id="subject"
-                  placeholder="How can we help you today"
-                  value={formData.subject}
-                  onChange={(e) => handleInputChange("subject", e.target.value)}
-                  className="w-full"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-2">
-                  Priority
-                </label>
-                <Select 
-                  onValueChange={(value) => handleInputChange("priority", value)}
-                  value={formData.priority}
-                  required
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select priority">
-                      {formData.priority && (
-                        <div className="flex items-center gap-2">
-                          <div className={`w-2 h-2 rounded-full ${
-                            formData.priority.includes("Low") ? "bg-green-400" :
-                            formData.priority.includes("Medium") ? "bg-yellow-400" :
-                            formData.priority.includes("High") ? "bg-red-400" :
-                            "bg-red-600"
-                          }`}></div>
-                          {formData.priority}
-                        </div>
-                      )}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Low">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                        Low - General Question
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="Medium">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                        Medium - Account Issue
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="High">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                        High - Technical Problem
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="Urgent">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-red-600"></div>
-                        Urgent - Service Down
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  placeholder="Please describe your issue or question in detail..."
-                  value={formData.message}
-                  onChange={(e) => handleInputChange("message", e.target.value)}
-                  className="w-full min-h-[120px] resize-none"
-                  required
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3"
-                disabled={!formData.subject || !formData.priority || !formData.message || isSubmitting}
-              >
-                {isSubmitting ? "Submitting..." : "Submit Request"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-
-        {/* FAQ Section */}
-        <Card className="border-t-4 border-t-blue-400">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg font-medium text-gray-700">
-              <HelpCircle className="w-5 h-5" />
-              Frequently Asked Questions
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {faqs.map((faq, index) => (
-              <Collapsible key={index} open={expandedFAQ === index} onOpenChange={() => toggleFAQ(index)}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 text-left hover:bg-gray-50 rounded-lg transition-colors">
-                  <span className="text-sm font-medium text-gray-700">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <Minus className="w-4 h-4 text-gray-500" />
-                  ) : (
-                    <Plus className="w-4 h-4 text-gray-500" />
-                  )}
-                </CollapsibleTrigger>
-                <CollapsibleContent className="px-3 pb-3">
-                  <p className="text-sm text-gray-600 leading-relaxed">{faq.answer}</p>
-                </CollapsibleContent>
-              </Collapsible>
-            ))}
-          </CardContent>
-        </Card>
-
-        {/* Need More Help Section */}
-        <Card className="border-t-4 border-t-blue-400">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg font-medium text-gray-700">
-              <Heart className="w-5 h-5" />
-              Need More Help?
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-              Our support team is available 24/7 to assist you with any questions or technical issues.
-            </p>
-            <div className="flex gap-3">
-              <Button className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2">Contact Us</Button>
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2">Live Chat</Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  )
+interface SupportForm {
+    category: SupportCategory | "";
+    subject: string;
+    message: string;
 }
+
+const PrioritySupportForm: React.FC = () => {
+    const [form, setForm] = useState<SupportForm>({
+        category: "",
+        subject: "",
+        message: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { id, value } = e.target;
+        setForm((prev) => ({ ...prev, [id]: value }));
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log("Form submitted:", form);
+        // Add your API call here
+        alert("Ticket submitted!");
+    };
+
+    return (
+        <div className="min-h-screen bg-muted/30 py-12 px-6">
+            <div className="max-w-2xl mx-auto">
+                <div className="rounded-lg border text-card-foreground bg-white shadow-lg">
+                    <div className="p-8 space-y-8">
+                        <div className="text-center space-y-4">
+                            <div className="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-green-600 hover:bg-green-600 text-white font-semibold px-4 py-1.5 text-sm">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="lucide lucide-zap h-3.5 w-3.5 mr-1.5"
+                                >
+                                    <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                                </svg>
+                                PRIORITY SUPPORT ACTIVE
+                            </div>
+                            <h1 className="font-heading font-bold text-2xl md:text-3xl text-navy">
+                                How can we help you, John?
+                            </h1>
+                            <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-md mx-auto">
+                                As a Premium Member, your tickets are fast-tracked to our senior analysts.
+                                <span className="font-semibold text-foreground"> Avg response: &lt; 12 Hours.</span>
+                            </p>
+                        </div>
+
+                        <form className="space-y-6" onSubmit={handleSubmit}>
+                            {/* Category */}
+                            <div className="space-y-2">
+                                <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium" htmlFor="category">
+                                    What is this regarding?
+                                </label>
+                                <select
+                                    id="category"
+                                    className="flex w-full rounded-md border border-input px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                    value={form.category}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select a category...</option>
+                                    <option value="data-query">Data Query / Correction</option>
+                                    <option value="billing">Billing & Subscription</option>
+                                    <option value="technical">Technical Issue</option>
+                                    <option value="feature">Feature Request</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            {/* Subject */}
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium" htmlFor="subject">
+                                    Subject
+                                </label>
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    placeholder="Brief summary of the issue..."
+                                    className="flex w-full rounded-md border border-input px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 h-11 bg-white"
+                                    value={form.subject}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            {/* Message */}
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium" htmlFor="message">
+                                    Message
+                                </label>
+                                <textarea
+                                    id="message"
+                                    placeholder="Please provide as much detail as possible..."
+                                    rows={6}
+                                    className="flex min-h-[80px] w-full rounded-md border border-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-white resize-none"
+                                    value={form.message}
+                                    onChange={handleChange}
+                                ></textarea>
+                            </div>
+
+                            {/* Priority */}
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium" htmlFor="priority">
+                                    Priority Level
+                                </label>
+                                <input
+                                    type="text"
+                                    id="priority"
+                                    value="High Priority (Premium)"
+                                    disabled
+                                    className="flex w-full rounded-md border border-input px-3 py-2 text-base bg-muted/50 text-foreground font-medium cursor-not-allowed h-11"
+                                />
+                            </div>
+
+                            {/* Submit */}
+                            <div className="pt-4 space-y-4">
+                                <button
+                                    type="submit"
+                                    className="inline-flex items-center justify-center gap-2 w-full px-4 py-2 h-12 bg-[#1F2D4A] hover:bg-navy/90 text-white rounded-md font-semibold text-base"
+                                >
+                                    Submit Priority Ticket
+                                </button>
+                                <p className="text-center">
+                                    <a href="#" className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4">
+                                        View Ticket History
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <p className="text-center text-sm text-muted-foreground mt-8">
+                    Direct Email: support@estateatlas.com
+                </p>
+            </div>
+        </div>
+    );
+};
+
+export default PrioritySupportForm;

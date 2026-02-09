@@ -1,241 +1,159 @@
-'use client'
+// components/PartnerHub.tsx
+import React from "react";
+import PartnerReferral from "@/components/PartnerReferral";
+import RecentReferralActivity from "@/components/RecentReferralActivity";
 
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Clipboard } from 'lucide-react'
-import Cookies from 'js-cookie';
-import toast from 'react-hot-toast'
-
-export default function AffiliatePage() {
-  // const [affiliateCode, setAffiliateCode] = useState<string | null>(null)
-  const [affiliateLink, setAffiliateLink] = useState<string | null>(null)
-    type AffiliateInfo = {
-      total_commission: number;
-      total_clicks: number;
-      total_referrals: number;
-      commission_rate: number;
-      status: string;
-    };
-
-    const [affiliateInfo, setAffiliateInfo] = useState<AffiliateInfo | null>(null)
-  const [loadingAffiliate, setLoadingAffiliate] = useState(false)
-  const [loadingStripe, setLoadingStripe] = useState(false)
-
-  const token = Cookies.get('token'); 
-
- // affiliate info on mount
-  useEffect(() => {
-    const fetchAffiliateInfo = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/affiliate/info`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        const data = await res.json()
-        if (res.ok && data.success) {
-          setAffiliateInfo(data)
-        }
-      } catch (err) {
-        console.error('Failed to fetch affiliate info:', err)
-      }
-    }
-
-    fetchAffiliateInfo()
-  }, [token])
-
-
-
-
-
-
-
-  const handleGetAffiliateLink = async () => {
-    setLoadingAffiliate(true)
-    try {
-      const res = await fetch('http://204.197.173.249:8014/api/affiliate/link', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      const data = await res.json()
-     
-      if (res.ok && data) {
-        
-        setAffiliateLink(data.data.affiliate_link)
-      
-        
-         toast.success('Affiliate code fetched successfully!')
-      } else {
-       toast.error('Failed to fetch affiliate code')
-      }
-    } catch (err) {
-      console.error(err)
-    toast.error('Error fetching affiliate code')
-    } finally {
-      setLoadingAffiliate(false)
-    }
-  }
-
-  const handleStripeConnect = async () => {
-    setLoadingStripe(true)
-    try {
-      const res = await fetch('http://204.197.173.249:8014/api/stripe/connect/create', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      const data = await res.json()
-      if (res.ok && data.url) {
-       
-        window.location.href = data.url
-      
-      } else {
-      toast.error('Failed to connect Stripe')
-      }
-    } catch (err) {
-      console.error(err)
-     toast.error('Error connecting to Stripe')
-    } finally {
-      setLoadingStripe(false)
-    }
-  }
-
-  return (
-    <div className="md:max-w-6xl w-full mx-auto md:p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">Affiliate Dashboard</h1>
-
-    <Card className="mb-6 shadow-xl border-0 border-t-4 py-10 border-sky-500">
-  <CardContent className=" space-y-4  items-start">
-    <div className="space-y-4">
-      <p className="text-lg font-semibold text-black">Get Your Affiliate Link</p>
-      <Button onClick={handleGetAffiliateLink} disabled={loadingAffiliate}>
-        {loadingAffiliate ? 'Loading...' : 'Generate Affiliate Link'}
-      </Button>
-    </div>
-{/* 
-    {affiliateCode && (
-      <div className="space-y-4">
-        <p className="text-lg font-semibold text-black">Your Code:</p>
-        <div className="flex items-center gap-2">
-          <Badge className="text-md">{affiliateCode}</Badge>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              navigator.clipboard.writeText(affiliateCode)
-             toast.success('Copied to clipboard!')
-            }}
-          >
-             <Clipboard />
-          </Button>
-        </div>
-
-       
-      </div>
-    )} */}
-
-
-{
-  affiliateLink && (
-    <div className="space-y-4">
-      <p className="text-lg font-semibold text-black">Your Affiliate Link:</p>
-      <div className="flex items-center gap-2">
-        <Badge className="text-md">{affiliateLink}</Badge>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            navigator.clipboard.writeText(affiliateLink)
-            toast.success('Copied to clipboard!')
-          }}
-        >
-          <Clipboard />
-        </Button>
-      </div>
-    </div>
-  )
+interface ReferralActivity {
+    date: string;
+    user: string;
+    plan: string;
+    commission: string;
+    status: "Paid" | "Pending" | "Trial";
 }
 
+const referralData: ReferralActivity[] = [
+    { date: "Oct 24, 2025", user: "m***@gmail.com", plan: "Premium Monthly", commission: "+$14.70", status: "Paid" },
+    { date: "Oct 18, 2025", user: "j***@outlook.com", plan: "Premium Annual", commission: "+$58.80", status: "Pending" },
+    { date: "Oct 12, 2025", user: "s***@yahoo.com", plan: "Premium Monthly", commission: "+$14.70", status: "Paid" },
+    { date: "Oct 5, 2025", user: "a***@gmail.com", plan: "Premium Monthly", commission: "+$14.70", status: "Trial" },
+    { date: "Sep 28, 2025", user: "r***@proton.me", plan: "Premium Annual", commission: "+$58.80", status: "Paid" },
+];
 
-  </CardContent>
-</Card>
+const PartnerHub: React.FC = () => {
+    return (
+        <div className="space-y-6">
+            {/* Header */}
+            <div>
+                <h1 className="text-2xl font-bold font-heading text-[#0a1532]">Partner Hub</h1>
+                <p className="text-muted-foreground">Earn commissions by referring investors to Estate Atlas.</p>
+            </div>
 
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Total Earnings */}
+                <div className="rounded-lg shadow-sm bg-[#0a1532] text-white border-0">
+                    <div className="p-6">
+                        <div className="flex items-start justify-between">
+                            <div className="space-y-2">
+                                <p className="text-sm text-gray-300">Total Earnings</p>
+                                <p className="text-3xl font-bold font-heading">$1,250.00</p>
+                                <div className="flex items-center gap-1.5">
+                                    <p className="text-sm text-gray-400">Lifetime Commission</p>
+                                </div>
+                            </div>
+                            <div className="p-3 bg-white/10 rounded-lg">
+                                {/* Dollar Sign Icon */}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="lucide lucide-dollar-sign h-6 w-6 text-[#3ba1df]"
+                                >
+                                    <line x1="12" y1="2" x2="12" y2="22"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                {/* Pending Payout */}
+                <div className="rounded-lg shadow-sm bg-[#0a1532] text-white border-0">
+                    <div className="p-6">
+                        <div className="flex items-start justify-between">
+                            <div className="space-y-2">
+                                <p className="text-sm text-gray-300">Pending Payout</p>
+                                <p className="text-3xl font-bold font-heading">$150.00</p>
+                                <div className="flex items-center gap-1.5">
+                                    <p className="text-sm text-gray-400">Next Payout: Oct 1st</p>
+                                </div>
+                            </div>
+                            <div className="p-3 bg-white/10 rounded-lg">
+                                {/* Clock Icon */}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="lucide lucide-clock h-6 w-6 text-[#3ba1df]"
+                                >
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                {/* Active Referrals */}
+                <div className="rounded-lg shadow-sm bg-[#0a1532] text-white border-0">
+                    <div className="p-6">
+                        <div className="flex items-start justify-between">
+                            <div className="space-y-2">
+                                <p className="text-sm text-gray-300">Active Referrals</p>
+                                <p className="text-3xl font-bold font-heading">12 Users</p>
+                                <div className="flex items-center gap-1.5 text-emerald-400">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width={24}
+                                        height={24}
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-trending-up h-4 w-4 text-emerald-400"
+                                    >
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                        <polyline points="16 7 22 7 22 13"></polyline>
+                                    </svg>
+                                    <p className="text-sm">+2 this week</p>
+                                </div>
+                            </div>
+                            <div className="p-3 bg-white/10 rounded-lg">
+                                {/* Users Icon */}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="lucide lucide-users h-6 w-6 text-[#3ba1df]"
+                                >
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <PartnerReferral />
+            <RecentReferralActivity />
 
-      {/* ✅ Affiliate Info Cards */}
-      {affiliateInfo && (
-        <div className='shadow-xl  border-t-4 py-5 px-4 border-sky-500 rounded-2xl my-5'>
-
-      <h1 className='text-lg font-bold my-4 '>Affiliate Information</h1>
-        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mb-6   ">
-          <Card className="shadow border-0 p-4">
-            <CardHeader>
-              <CardTitle>Total Commission</CardTitle>
-              <CardDescription className="text-xl font-bold text-green-600">
-                ${affiliateInfo.total_commission}
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="shadow border-0 p-4">
-            <CardHeader>
-              <CardTitle>Total Clicks</CardTitle>
-              <CardDescription className="text-xl font-bold text-blue-600">
-                {affiliateInfo.total_clicks}
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="shadow border-0 p-4">
-            <CardHeader>
-              <CardTitle>Total Referrals</CardTitle>
-              <CardDescription className="text-xl font-bold text-purple-600">
-                {affiliateInfo.total_referrals}
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="shadow border-0 p-4">
-            <CardHeader>
-              <CardTitle>Commission Rate</CardTitle>
-              <CardDescription className="text-xl font-bold text-orange-600">
-                {affiliateInfo.commission_rate}%
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="shadow border-0 p-4">
-            <CardHeader>
-              <CardTitle>Status</CardTitle>
-              <CardDescription className="text-xl font-bold text-sky-600 capitalize">
-                {affiliateInfo.status}
-              </CardDescription>
-            </CardHeader>
-          </Card>
+            {/* Other Sections: Referral Link, Payout Settings, Recent Activity */}
+            {/* You can continue the same way: replace `class` with `className` and adjust readOnly/input/button props */}
+            {/* For brevity, the rest of the code can be broken into smaller React components */}
         </div>
-          </div>
-      )}
+    );
+};
 
-
-
-
-
-
-
-
-      <Card className="shadow-xl border-0 border-t-4 py-10 border-sky-500">
-        <CardHeader>
-          <CardTitle>Connect Stripe Account</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Button onClick={handleStripeConnect} disabled={loadingStripe}>
-            {loadingStripe ? 'Redirecting...' : 'Connect with Stripe'}
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
+export default PartnerHub;

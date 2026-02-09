@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 /* ================= TYPES ================= */
 
@@ -34,9 +34,8 @@ interface DataCardProps {
 export default function Hero() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const frameRef = useRef<number>(0);
-
-    // ✅ FIXED
     const animationIdRef = useRef<number | null>(null);
+    const [canvasHeight, setCanvasHeight] = useState(720); // default height in px
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -5526,10 +5525,7 @@ export default function Hero() {
                     "x": 97,
                     "y": 26
                 },
-                {
-                    "x": 98,
-                    "y": 26
-                },
+
                 {
                     "x": 99,
                     "y": 26
@@ -5819,10 +5815,7 @@ export default function Hero() {
                     "x": 99,
                     "y": 27
                 },
-                {
-                    "x": 100,
-                    "y": 27
-                },
+
                 {
                     "x": 101,
                     "y": 27
@@ -6091,13 +6084,10 @@ export default function Hero() {
                     "y": 28
                 },
                 {
-                    "x": 99,
+                    "x": 98,
                     "y": 28
                 },
-                {
-                    "x": 100,
-                    "y": 28
-                },
+
                 {
                     "x": 101,
                     "y": 28
@@ -6366,10 +6356,6 @@ export default function Hero() {
                 },
                 {
                     "x": 97,
-                    "y": 29
-                },
-                {
-                    "x": 98,
                     "y": 29
                 },
                 {
@@ -13664,7 +13650,7 @@ export default function Hero() {
             newYork: { x: 37, y: 34 },
             london: { x: 66, y: 23 },
             dubai: { x: 83, y: 44 },
-            singapore: { x: 105, y: 55 }
+            singapore: { x: 105, y: 55 },
         };
 
         const connections: [keyof Cities, keyof Cities][] = [
@@ -13674,24 +13660,20 @@ export default function Hero() {
         ];
 
         const gridWidth = 130;
-        const gridHeight = 75;
+        const gridHeight = 80;
 
-        const resize = () => {
-            const rect = canvas.getBoundingClientRect();
+        const resizeCanvas = () => {
             const dpr = window.devicePixelRatio || 1;
-
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-
-            ctx.setTransform(1, 0, 0, 1, 0, 0); // reset
+            canvas.width = canvas.offsetWidth * dpr;
+            canvas.height = canvasHeight * dpr; // dynamic canvas height
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(dpr, dpr);
         };
 
         const animate = () => {
             frameRef.current++;
-
             const width = canvas.clientWidth;
-            const height = canvas.clientHeight;
+            const height = canvasHeight; // dynamic height
 
             ctx.clearRect(0, 0, width, height);
 
@@ -13731,13 +13713,9 @@ export default function Hero() {
 
                 const t = ((frameRef.current * 0.4) % 180) / 180;
                 const px =
-                    (1 - t) * (1 - t) * x1 +
-                    2 * (1 - t) * t * midX +
-                    t * t * x2;
+                    (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * midX + t * t * x2;
                 const py =
-                    (1 - t) * (1 - t) * y1 +
-                    2 * (1 - t) * t * (midY - arc) +
-                    t * t * y2;
+                    (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * (midY - arc) + t * t * y2;
 
                 ctx.beginPath();
                 ctx.arc(px, py, 2.5, 0, Math.PI * 2);
@@ -13777,21 +13755,23 @@ export default function Hero() {
             animationIdRef.current = requestAnimationFrame(animate);
         };
 
-        resize();
+        resizeCanvas();
         animate();
-        window.addEventListener("resize", resize);
+        window.addEventListener("resize", resizeCanvas);
 
         return () => {
-            window.removeEventListener("resize", resize);
-            if (animationIdRef.current)
-                cancelAnimationFrame(animationIdRef.current);
+            window.removeEventListener("resize", resizeCanvas);
+            if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
         };
-    }, []);
+    }, [canvasHeight]); // re-run if height changes
+
+    // Example: increment height button (optional)
+    const increaseCanvasHeight = () => setCanvasHeight((prev) => prev + 100);
 
     return (
-        <div className="relative min-h-screen w-full pt-[112px] overflow-hidden bg-[#0a1532]">
-            <div className="container relative z-10 pt-10 pb-16 mx-auto px-4">
-                <div className="text-center max-w-4xl mx-auto mb-12">
+        <div className="relative min-h-screen w-full pt-[80px] overflow-hidden bg-[#0a1532]">
+            <div className="container relative z-10 pt-5 pb-10 mx-auto px-4">
+                <div className="text-center max-w-4xl mx-auto mb-4">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 font-bold">
                         International Real Estate Investing, Powered by Data
                     </h1>
@@ -13804,19 +13784,49 @@ export default function Hero() {
                         Analyze Global Markets
                     </button>
                 </div>
-                {/* MAP */}
-                <div className="relative w-full max-w-[1200px] h-[420px] md:h-[520px] mx-auto">
-                    <div className="relative w-full h-full  rounded-xl overflow-hidden">
 
-                        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+                {/* MAP */}
+                <div className="relative w-full max-w-[1200px] mx-auto">
+                    <div className="relative w-full h-[720px] md:h-[720px] rounded-xl overflow-hidden">
+                        <canvas
+                            ref={canvasRef}
+                            className="absolute inset-0 w-full"
+                            style={{ height: `${canvasHeight}px` }} // dynamic height
+                        />
 
                         {/* DATA CARDS */}
-                        <DataCard city="New York" value="5.4%" trend="+0.8%" position="left-[20%] top-[18%]" delay="0s" />
-                        <DataCard city="London" value="4.1%" trend="+1.2%" position="left-[44%] top-[6%]" delay="0.2s" />
-                        <DataCard city="Dubai" value="6.8%" trend="+1.5%" position="left-[60%] top-[35%]" delay="0.35s" />
-                        <DataCard city="Singapore" value="5.2%" trend="+0.8%" position="right-[10%] top-[55%]" delay="0.5s" />
-
+                        <DataCard
+                            city="New York"
+                            value="5.4%"
+                            trend="+0.8%"
+                            position="left-[20%] top-[18%]"
+                            delay="0s"
+                        />
+                        <DataCard
+                            city="London"
+                            value="4.1%"
+                            trend="+1.2%"
+                            position="left-[44%] top-[6%]"
+                            delay="0.2s"
+                        />
+                        <DataCard
+                            city="Dubai"
+                            value="6.8%"
+                            trend="+1.5%"
+                            position="left-[60%] top-[35%]"
+                            delay="0.35s"
+                        />
+                        <DataCard
+                            city="Singapore"
+                            value="5.2%"
+                            trend="+0.8%"
+                            position="right-[10%] top-[55%]"
+                            delay="0.5s"
+                        />
                     </div>
+
+                    {/* Example button to increase canvas height */}
+
                 </div>
             </div>
         </div>
@@ -13833,25 +13843,20 @@ const DataCard: React.FC<DataCardProps> = ({
                                                delay,
                                            }) => (
     <div
-        className={`absolute z-20 opacity-0  animate-[cardEnter_0.4s_ease-out_forwards] ${position}`}
-        style={{animationDelay: delay}}
+        className={`absolute z-20 opacity-0 animate-[cardEnter_0.4s_ease-out_forwards] ${position}`}
+        style={{ animationDelay: delay }}
     >
-        <div className="bg-[#05080f] border border-white/12 card-newyork rounded-lg px-3.5 py-2.5 shadow-lg">
+        <div className="bg-[#05080f] card-newyork border border-white/12 rounded-lg px-3.5 py-2.5 shadow-lg">
             <div className="flex items-center gap-1.5 mb-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"/>
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                 <span className="text-[11px] font-semibold text-white">{city}</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-        <span className="font-mono text-lg font-semibold text-cyan-400">
-          {value}
-        </span>
-                <span className="text-[10px] font-medium text-emerald-400">
-          {trend}
-        </span>
+                <span className="font-mono text-lg font-semibold text-cyan-400">{value}</span>
+                <span className="text-[10px] font-medium text-emerald-400">{trend}</span>
             </div>
             <div className="card-connector"></div>
         </div>
-
     </div>
 );

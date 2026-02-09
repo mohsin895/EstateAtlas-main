@@ -1,8 +1,24 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
 import { Search, ChevronDown, Plus,TrendingUp, User   } from "lucide-react";
 import TenYearHistory from "@/components/TenYearHistory";
 import MacroAndTaxes from "@/components/MacroAndTaxes";
 const Countries = () => {
+
+    const [activeProperty, setActiveProperty] = useState("All Properties");
+
+    const propertyTypes = ["All Properties", "Houses", "Apartments"];
+
+    const timeRanges = [
+        "Last 3 Months",
+        "Last 6 Months",
+        "Last 12 Months",
+        "Last 24 Months",
+    ];
+
+    const [open, setOpen] = useState(false);
+    const [selectedRange, setSelectedRange] = useState("Last 12 Months");
   return (
 
 
@@ -26,15 +42,47 @@ const Countries = () => {
                       </div>
 
                       {/* Dropdown */}
-                      <button
-                          type="button"
-                          className="flex h-10 items-center justify-between rounded-md border border-gray-300
-            px-3 py-2 text-sm w-full sm:w-[180px] bg-white
-            focus:outline-none focus:ring-2 focus:ring-[#071636]"
-                      >
-                          <span>Last 12 Months</span>
-                          <ChevronDown className="h-4 w-4 opacity-60" />
-                      </button>
+                      <div className="relative w-full sm:w-[180px]">
+                          <button
+                              type="button"
+                              onClick={() => setOpen(!open)}
+                              className="flex h-10 w-full items-center justify-between rounded-md
+      border border-gray-300 bg-white px-3 text-sm
+      focus:outline-none focus:ring-2 focus:ring-[#3baade]"
+                          >
+                              <span>{selectedRange}</span>
+                              <ChevronDown
+                                  className={`h-4 w-4 opacity-60 transition ${
+                                      open ? "rotate-180" : ""
+                                  }`}
+                              />
+                          </button>
+
+                          {open && (
+                              <div className="absolute z-50 mt-1 w-full rounded-md border
+      border-gray-200 bg-white shadow-lg">
+                                  {timeRanges.map((range) => (
+                                      <button
+                                          key={range}
+                                          onClick={() => {
+                                              setSelectedRange(range);
+                                              setOpen(false);
+                                          }}
+                                          className={`flex w-full items-center justify-between px-3 py-2 text-sm
+            hover:bg-[#3baade] ${
+                                              selectedRange === range ? "bg-white font-medium" : ""
+                                          }`}
+                                      >
+                                          <span>{range}</span>
+                                          {selectedRange === range && (
+                                              <span className="text-sky-600">✓</span>
+                                          )}
+                                      </button>
+                                  ))}
+                              </div>
+                          )}
+                      </div>
+
                   </div>
 
                   {/* Right Section */}
@@ -42,19 +90,20 @@ const Countries = () => {
 
                       {/* Property Type Tabs */}
                       <div className="inline-flex rounded-full bg-gray-100 p-1">
-
-                          <button className="px-4 py-2 text-sm font-medium rounded-full text-gray-500 hover:text-gray-800 transition">
-                              All Properties
-                          </button>
-
-                          <button className="px-4 py-2 text-sm font-medium rounded-full bg-[#071636] text-white ">
-                              Houses
-                          </button>
-
-                          <button className="px-4 py-2 text-sm font-medium rounded-full text-gray-500 hover:text-gray-800 transition">
-                              Apartments
-                          </button>
-
+                          {propertyTypes.map((type) => (
+                              <button
+                                  key={type}
+                                  onClick={() => setActiveProperty(type)}
+                                  className={`px-4 py-2 text-sm font-medium rounded-full transition
+                    ${
+                                      activeProperty === type
+                                          ? "bg-[#071636] text-white"
+                                          : "text-gray-500 hover:text-gray-800"
+                                  }`}
+                              >
+                                  {type}
+                              </button>
+                          ))}
                       </div>
 
                       {/* Save Button */}

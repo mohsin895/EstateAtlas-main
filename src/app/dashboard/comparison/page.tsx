@@ -337,7 +337,7 @@ export default function ComparisonDashboard() {
     };
 
     return (
-        <div className="space-y-6 max-w-7xl mx-auto p-4">
+        <div className="space-y-6  mx-auto ">
             {/* Toggle */}
             <div className="rounded-lg border bg-white shadow-sm p-6 flex justify-center">
                 <div className="inline-flex rounded-lg border p-1 bg-gray-50">

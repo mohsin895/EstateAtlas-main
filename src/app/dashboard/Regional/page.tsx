@@ -7,7 +7,7 @@ import { BarChart3, Flag, MapPin, Home, Star } from "lucide-react"
 export default function RegionalData() {
   return (
     <div className=" bg-gray-50 min-h-screen">
-      <div className="md:max-w-6xl w-full mx-auto space-y-6">
+      <div className=" w-full mx-auto space-y-6">
         {/* Header with filters */}
         <div className="bg-white rounded-lg p-6 shadow-sm">
     

@@ -25,7 +25,7 @@ const AccountSettings: React.FC = () => {
                 JC
               </span>
                         </div>
-                        <h2 className="mt-4 text-lg font-heading font-bold text-[#071636]">John Connors</h2>
+                        <h2 className="mt-6 text-lg font-heading font-bold text-[#071636]">John Connors</h2>
                         <p className="text-sm text-dark-gray">john.connors@email.com</p>
                         <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold mt-3 bg-gray-100 text-gray-600">
                             Basic Member

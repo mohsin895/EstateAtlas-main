@@ -18,7 +18,7 @@ import {
 
 export default function InvestmentCalculatorPanel() {
     return (
-        <div className="grid grid-cols-1 mt-4 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 mt-6 lg:grid-cols-2 gap-6">
             {/* LEFT */}
             <PropertyDetailsCard />
 
@@ -323,9 +323,10 @@ function WealthChartCard() {
                                 type="monotone"
                                 dataKey="equity"
                                 name="Equity"
-                                stroke="#3ba1df"
-                                fill="#3ba1df"
-                                fillOpacity={0.55}
+                                stackId="1"
+                                stroke="#60a5fa"
+                                fill="#7dd3fc"
+                                fillOpacity={0.8}
                                 strokeWidth={2}
                             />
 
@@ -334,9 +335,10 @@ function WealthChartCard() {
                                 type="monotone"
                                 dataKey="cashflow"
                                 name="Cumulative Cash Flow"
-                                stroke="#22c55e"
-                                fill="#22c55e"
-                                fillOpacity={0.55}
+                                stackId="1"
+                                stroke="#4ade80"
+                                fill="#86efac"
+                                fillOpacity={0.8}
                                 strokeWidth={2}
                             />
                         </AreaChart>

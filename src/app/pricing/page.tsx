@@ -101,18 +101,43 @@ const Pricing = () => {
                             <div className="flex items-center p-6 pt-4">
                                 <button
                                     onClick={() => handleClick("basic")}
-                                    className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 w-full border bg-background text-[#0A1532] hover:text-[#3CABDD] hover:bg-[#0A1532]/5 transition"
+                                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md
+    text-sm font-medium ring-offset-background transition-colors
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+    disabled:pointer-events-none disabled:opacity-50
+    [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0
+    border bg-background h-10 px-4 py-2 w-full
+    border-primary text-primary hover:bg-[#0A1532]/5 hover:text-white"
                                 >
                                     Get Started
                                 </button>
+
+
+
                             </div>
                         </div>
 
                         {/* Premium Card */}
                         <div className="rounded-lg bg-card text-card-foreground relative flex flex-col border-[#3CABDD] border-2 shadow-xl scale-105 z-10">
-                            <div className="inline-flex items-center rounded-full border text-xs font-semibold absolute -top-3 left-1/2 -translate-x-1/2 bg-[#3CABDD] text-white px-4 py-1">
+                            <div className="inline-flex items-center rounded-full border border-transparent text-xs font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-[#379BCD] text-white px-4 py-1 absolute -top-3 left-1/2 -translate-x-1/2 hover:bg-[#071636cc]">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={12}
+                                    height={12}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="lucide lucide-crown w-3 h-3 mr-1"
+                                >
+                                    <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path>
+                                    <path d="M5 21h14"></path>
+                                </svg>
                                 MOST POPULAR
                             </div>
+
                             <div className="flex flex-col space-y-1.5 p-6 text-center pt-8">
                                 <h3 className="tracking-tight text-2xl font-bold text-foreground">Premium</h3>
                                 <p className="text-sm text-muted-foreground mt-2">
@@ -179,10 +204,12 @@ const Pricing = () => {
                             <div className="flex items-center p-6 pt-4">
                                 <button
                                     onClick={() => handleClick("enterprise")}
-                                    className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium h-10 px-4 w-full bg-background text-[#0A1532] hover:text-[#3CABDD] hover:bg-[#0A1532]/5 transition"
+                                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-muted-foreground/30 bg-background h-10 px-4 py-2 w-full text-muted-foreground hover:text-white hover:bg-[#e6e6e6]"
                                 >
                                     Contact Sales
                                 </button>
+
+
                             </div>
                         </div>
                     </div>

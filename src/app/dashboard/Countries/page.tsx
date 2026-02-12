@@ -22,7 +22,7 @@ const Countries = () => {
   return (
 
 
-      <div className="w-full max-w-5xl mx-auto    rounded-lg ">
+      <div className="w-full  mx-auto    rounded-lg ">
           <div className=" rounded-lg  bg-white border border-gray-200 p-4">
               <div className="flex flex-col lg:flex-row items-center gap-4">
 
@@ -120,7 +120,7 @@ const Countries = () => {
 
               </div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
 
               {/* Score Card */}
               <div className=" rounded-lg border bg-white border-gray-200 shadow-sm p-6 ">
@@ -176,7 +176,7 @@ const Countries = () => {
 
                   </div>
 
-                  <p className="text-xs text-gray-400 text-center mt-4">
+                  <p className="text-xs text-gray-400 text-center mt-6">
                       Calculated from Yield, Growth, Tax, and Risk metrics.
                   </p>
 
@@ -268,7 +268,7 @@ const Countries = () => {
 
           </div>
 
-          <div className="bg-white rounded-lg border mt-4 border-gray-200 p-6 shadow-sm">
+          <div className="bg-white rounded-lg border mt-6 border-gray-200 p-6 shadow-sm">
 
               {/* Header */}
               <div className="flex items-center gap-3 mb-4">

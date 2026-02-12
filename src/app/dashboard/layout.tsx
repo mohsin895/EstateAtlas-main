@@ -1,76 +1,54 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import Header from "@/components/dashboard/header";
 import Sidebar from "@/components/Sidebar";
-import { Menu } from "lucide-react";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
 }
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex font-sans h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+        <div className="flex min-h-screen">
 
             {/* ================= Desktop Sidebar ================= */}
-            <aside className="hidden md:flex w-64 shrink-0">
+            <div className="hidden lg:block w-64">
                 <Sidebar />
-            </aside>
+            </div>
 
             {/* ================= Mobile Sidebar ================= */}
             <div
-                className={`fixed inset-0 z-40 md:hidden transition-all ${
-                    isSidebarOpen ? "visible" : "invisible"
-                }`}
+                className={`fixed inset-y-0 left-0 z-50 w-64 bg-white transform transition-transform duration-300 lg:hidden
+                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
             >
-                {/* Overlay */}
-                <div
-                    onClick={() => setSidebarOpen(false)}
-                    className={`absolute inset-0 bg-black/50 transition-opacity ${
-                        isSidebarOpen ? "opacity-100" : "opacity-0"
-                    }`}
-                />
-
-                {/* Sidebar Panel */}
-                <div
-                    className={`absolute left-0 top-0 h-full w-64 bg-white dark:bg-gray-900 shadow-lg
-          transform transition-transform duration-300
-          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
-                >
-                    <Sidebar />
-                </div>
+                <Sidebar />
             </div>
 
+            {/* ================= Overlay ================= */}
+            {isSidebarOpen && (
+                <div
+                    onClick={() => setSidebarOpen(false)}
+                    className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+                />
+            )}
+
             {/* ================= Main Content ================= */}
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1">
 
                 {/* Header */}
-                <header className="flex items-center gap-4  border-b dark:border-gray-700">
-
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="md:hidden"
-                        onClick={() => setSidebarOpen(true)}
-                    >
-                        <Menu className="w-6 h-6 text-gray-800 dark:text-white" />
-                    </button>
-
-                    {/* Header Component */}
-                    <div className="flex-1">
-                        <Header />
-                    </div>
-
-                </header>
+                <Header onMenuClick={() => setSidebarOpen(true)} />
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-y-auto p-6">
+                <main className="p-6">
                     {children}
                 </main>
 
             </div>
+
         </div>
     );
 };

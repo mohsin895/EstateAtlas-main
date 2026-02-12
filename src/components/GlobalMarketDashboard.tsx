@@ -461,7 +461,7 @@ const GlobalMarketDashboard: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col bg-white mt-4 lg:flex-row gap-4 p-6">
+        <div className="flex flex-col bg-[#ffffff] bg-card rounded-lg border border-border shadow-sm overflow-hidden mt-4 lg:flex-row gap-4 p-6">
             {/* --- Left Tabs --- */}
             <div className="w-full lg:w-64 bg-muted/50 border border-border rounded-md p-4">
                 <h3 className="font-semibold mb-4 text-sm uppercase tracking-wide">Metrics</h3>

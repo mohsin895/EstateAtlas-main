@@ -9,7 +9,7 @@ import GlobalMarketDashboard from "@/components/GlobalMarketDashboard";
 
 const GlobalMarketHeader: React.FC = () => {
     return (
-        <div className="w-full max-w-5xl mx-auto    rounded-lg ">
+        <div className="w-full  mx-auto    rounded-lg ">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
                 {/* Title */}

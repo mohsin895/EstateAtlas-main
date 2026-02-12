@@ -38,7 +38,7 @@ const Footer = () => {
                     {/* First Column: Logo + Description (Left) */}
                     <div className="max-w-sm justify-self-start text-left">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 bg-sky rounded-md flex items-center justify-center">
+                            <div className="w-8 h-8 bg-[#379BCC] rounded-md flex items-center justify-center">
                                 <span className="font-heading text-primary-foreground font-bold text-sm">EA</span>
                             </div>
                             <span className="font-heading text-lg text-primary-foreground">Estate Atlas</span>

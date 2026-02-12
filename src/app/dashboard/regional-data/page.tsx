@@ -19,7 +19,7 @@ const RegionalCityData: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<'country' | 'city' | 'property' | null>(null);
 
     return (
-        <div className="w-full max-w-5xl mx-auto    rounded-lg ">
+        <div className="w-full mx-auto    rounded-lg ">
             <h1 className="font-heading font-bold text-2xl text-navy">
                 Regional &amp; City Data
             </h1>
@@ -28,7 +28,7 @@ const RegionalCityData: React.FC = () => {
             </p>
 
 
-            <div className="rounded-lg mt-4 border text-card-foreground shadow-sm bg-white border-gray-200">
+            <div className="rounded-lg mt-6 border text-card-foreground shadow-sm bg-white border-gray-200">
                 <div className="p-4">
                     <div className="flex flex-wrap items-center gap-4">
 
@@ -134,7 +134,7 @@ const RegionalCityData: React.FC = () => {
             </div>
 
 
-            <div className="grid grid-cols-1 mt-4 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 mt-6 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
                 {/* Median Price */}
                 <div className="rounded-lg border text-card-foreground shadow-sm bg-white border-gray-200">

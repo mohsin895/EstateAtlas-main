@@ -46,9 +46,9 @@ const About = () => {
             <section className="grid grid-cols-1 md:grid-cols-2">
                 {/* Mission */}
                 <div className="bg-[#071636] p-12 md:p-16">
-    <span className="text-[#3BAADD] text-sm font-heading tracking-widest uppercase mb-4 block">
-      Our Mission
-    </span>
+            <span className="text-[#3BAADD] text-sm font-heading tracking-widest uppercase mb-4 block">
+              Our Mission
+            </span>
                     <p className="text-primary-foreground text-lg leading-relaxed">
                         As one of the world's most comprehensive international real estate data platforms, our mission is to democratize access to institutional-grade market intelligence. We believe that informed investors make better decisions, and better decisions lead to more efficient, transparent global real estate markets.
                     </p>
@@ -56,9 +56,9 @@ const About = () => {
 
                 {/* Vision */}
                 <div className="bg-[#3BAADD] p-12 md:p-16">
-    <span className="text-primary-foreground/80 text-sm font-heading tracking-widest uppercase mb-4 block">
-      Our Vision
-    </span>
+                <span className="text-primary-foreground/80 text-sm font-heading tracking-widest uppercase mb-4 block">
+                  Our Vision
+                </span>
                     <p className="text-primary-foreground text-lg leading-relaxed">
                         To be the world's leading source of international real estate data, setting the standard for accuracy, coverage, and accessibility. We envision a future where geographical barriers no longer limit investment opportunities, and every investor has the tools to build truly global portfolios.
                     </p>
@@ -85,7 +85,7 @@ const About = () => {
             </section>
 
             <section className="bg-[#E5E5E5] py-20 md:py-28">
-                <div className="container">
+                <div className="container mx-auto px-4 ">
                     <h2 className="font-heading text-3xl md:text-4xl text-navy text-center mb-16">
                         Our Core Values
                     </h2>
@@ -241,21 +241,7 @@ const About = () => {
                     </div>
                 </div>
             </section>
-            <section className="bg-[#0A1532] py-24">
-                <div className="container text-center">
-                    <h2 className="font-heading text-3xl md:text-4xl text-primary-foreground mb-6 text-balance">
-                        Ready to look beyond borders?
-                    </h2>
-                    <p className="text-primary-foreground/70 text-lg max-w-2xl mx-auto mb-8">
-                        Join thousands of investors using Estate Atlas to make smarter, data-driven decisions.
-                    </p>
-                    <a href="/dashboard">
-                        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 bg-[#379BCD] hover:bg-[#379BCD]/90 text-primary font-semibold px-8 py-6 text-lg">
-                            Get Started Today
-                        </button>
-                    </a>
-                </div>
-            </section>
+
 
 
             <Footer />

@@ -58,7 +58,7 @@ const scenarios: Scenario[] = [
 
 export default function StressTestScenarios() {
     return (
-        <div className="rounded-lg border mt-4 bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border mt-6 bg-card text-card-foreground shadow-sm">
 
             {/* Header */}
             <div className="p-6 pb-4">

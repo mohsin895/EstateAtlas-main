@@ -13769,7 +13769,7 @@ export default function Hero() {
     const increaseCanvasHeight = () => setCanvasHeight((prev) => prev + 100);
 
     return (
-        <div className="relative min-h-screen w-full pt-[80px] overflow-hidden bg-[#0a1532]">
+        <div className="relative min-h-screen w-full pt-[112px] overflow-hidden bg-[#0a1532]">
             <div className="container relative z-10 pt-5 pb-10 mx-auto px-4">
                 <div className="text-center max-w-4xl mx-auto mb-4">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 font-bold">
@@ -13799,28 +13799,28 @@ export default function Hero() {
                             city="New York"
                             value="5.4%"
                             trend="+0.8%"
-                            position="left-[20%] top-[18%]"
+                            position="left-[20%] top-[30%]"
                             delay="0s"
                         />
                         <DataCard
                             city="London"
                             value="4.1%"
                             trend="+1.2%"
-                            position="left-[44%] top-[6%]"
+                            position="left-[44%] top-[15%]"
                             delay="0.2s"
                         />
                         <DataCard
                             city="Dubai"
                             value="6.8%"
                             trend="+1.5%"
-                            position="left-[60%] top-[35%]"
+                            position="left-[60%] top-[40%]"
                             delay="0.35s"
                         />
                         <DataCard
                             city="Singapore"
                             value="5.2%"
                             trend="+0.8%"
-                            position="right-[10%] top-[55%]"
+                            position="right-[14%] top-[55%]"
                             delay="0.5s"
                         />
                     </div>

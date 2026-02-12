@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between py-4">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-lg bg-sky text-primary font-bold text-lg">
+                        <div className="flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-lg bg-[#3BAADD] text-primary font-bold text-lg">
                             EA
                         </div>
                         <span className="text-xl md:text-2xl font-bold text-white">

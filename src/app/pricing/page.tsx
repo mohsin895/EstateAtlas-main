@@ -47,7 +47,7 @@ const Pricing = () => {
                     </p>
 
                     {/* Toggle */}
-                    <div className="flex items-center justify-center gap-3 mb-12">
+                    <div className="flex items-center justify-center gap-3">
                         <span className="text-sm font-medium text-white">Monthly</span>
                         <button
                             type="button"

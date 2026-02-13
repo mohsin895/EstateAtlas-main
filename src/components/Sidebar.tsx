@@ -38,12 +38,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
         }`;
 
 
+
     return (
         <aside className="flex flex-col bg-white w-[260px] border-r border-gray-200 fixed h-full">
 
             {/* ✅ Mobile Close Button */}
             <button
-                onClick={onClose}
+                onClick={() => onClose?.()}
                 className="lg:hidden absolute top-4 right-4 p-2 rounded-md hover:bg-gray-100"
             >
                 <X className="h-5 w-5" />
@@ -67,22 +68,22 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
 
                         <div className="space-y-1 text-sm">
 
-                            <Link href="/dashboard/Countries" className={linkClasses("/dashboard/Countries")}>
+                            <Link href="/dashboard/Countries"   onClick={() => onClose?.()} className={linkClasses("/dashboard/Countries")}>
                                 <Globe className="h-5 w-5" />
                                 <span>All Countries</span>
                             </Link>
 
-                            <Link href="/dashboard/global-data" className={linkClasses("/dashboard/global-data")}>
+                            <Link href="/dashboard/global-data"   onClick={() => onClose?.()} className={linkClasses("/dashboard/global-data")}>
                                 <BarChart3 className="h-5 w-5" />
                                 <span>Global Data</span>
                             </Link>
 
-                            <Link href="/dashboard/regional-data" className={linkClasses("/dashboard/regional-data")}>
+                            <Link href="/dashboard/regional-data"   onClick={() => onClose?.()} className={linkClasses("/dashboard/regional-data")}>
                                 <Map className="h-5 w-5" />
                                 <span>Regional / City Data</span>
                             </Link>
 
-                            <Link href="/dashboard/saved-countries" className={linkClasses("/dashboard/saved-countries")}>
+                            <Link href="/dashboard/saved-countries"   onClick={() => onClose?.()} className={linkClasses("/dashboard/saved-countries")}>
                                 <Bookmark className="h-5 w-5" />
                                 <span>Saved Countries</span>
                             </Link>
@@ -98,12 +99,12 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
 
                         <div className="space-y-1 text-sm">
 
-                            <Link href="/dashboard/investment-calculator" className={linkClasses("/dashboard/investment-calculator")}>
+                            <Link href="/dashboard/investment-calculator"   onClick={() => onClose?.()} className={linkClasses("/dashboard/investment-calculator")}>
                                 <Calculator className="h-5 w-5" />
                                 <span>Investment Calculator</span>
                             </Link>
 
-                            <Link href="/dashboard/comparison" className={linkClasses("/dashboard/comparison")}>
+                            <Link href="/dashboard/comparison"   onClick={() => onClose?.()} className={linkClasses("/dashboard/comparison")}>
                                 <Scale className="h-5 w-5" />
                                 <span>Comparison Tool</span>
                                 <Crown className="h-4 w-4 text-amber-500 ml-auto" />
@@ -120,23 +121,23 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
 
                         <div className="space-y-1 font-[500] text-sm">
 
-                            <Link href="/dashboard/affiliate" className={linkClasses("/dashboard/affiliate")}>
+                            <Link href="/dashboard/affiliate"   onClick={() => onClose?.()} className={linkClasses("/dashboard/affiliate")}>
                                 <Users className="h-5 w-5" />
                                 <span className="flex-1">Affiliate Dashboard</span>
                                 <Crown className="h-4 w-4 text-amber-500 ml-auto" />
                             </Link>
 
-                            <Link href="/dashboard/settings" className={linkClasses("/dashboard/settings")}>
+                            <Link href="/dashboard/settings"   onClick={() => onClose?.()} className={linkClasses("/dashboard/settings")}>
                                 <Settings className="h-5 w-5" />
                                 <span>Account Settings</span>
                             </Link>
 
-                            <Link href="/dashboard/billing" className={linkClasses("/dashboard/billing")}>
+                            <Link href="/dashboard/billing"   onClick={() => onClose?.()} className={linkClasses("/dashboard/billing")}>
                                 <CreditCard className="h-5 w-5" />
                                 <span>Billing</span>
                             </Link>
 
-                            <Link href="/dashboard/support" className={linkClasses("/dashboard/support")}>
+                            <Link href="/dashboard/support"   onClick={() => onClose?.()} className={linkClasses("/dashboard/support")}>
                                 <Headphones className="h-5 w-5" />
                                 <span>Support</span>
                             </Link>

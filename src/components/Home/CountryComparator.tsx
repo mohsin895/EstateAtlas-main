@@ -33,7 +33,7 @@ const ComparatorRow: React.FC<ComparatorRowProps> = ({
 const CountryComparator: React.FC = () => {
     return (
         <section className="py-24 bg-[#E5E5E5]">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 pl-[32px] pr-[32px]">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Left Comparator Card */}
                     <div className="order-2 lg:order-1">

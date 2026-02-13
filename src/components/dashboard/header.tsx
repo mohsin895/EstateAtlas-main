@@ -67,7 +67,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                         <Menu className="h-5 w-5" />
                     </Button>
 
-                    <h1 className="font-semibold text-lg">{currentTitle}</h1>
+                    <h1 className="font-heading font-semibold text-lg">{currentTitle}</h1>
                 </div>
 
                 {/* Right */}

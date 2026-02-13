@@ -1,7 +1,7 @@
 const WhyChoose = () => {
     return (
         <section id="features" className="py-24 bg-background">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 pl-[32px] pr-[32px]">
                 {/* Section Header */}
                 <div className="mb-16 text-center">
                     <h2 className="font-heading mb-4 text-3xl text-foreground md:text-4xl">

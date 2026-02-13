@@ -75,7 +75,7 @@ const MarketInsights: React.FC = () => {
 
     return (
         <section id="insights" className="py-24 bg-background">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 pl-[32px] pr-[32px]">
                 {/* Heading */}
                 <div className="mb-12 text-center">
                     <h2 className="mb-4 text-3xl font-heading text-foreground md:text-4xl">

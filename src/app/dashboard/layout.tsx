@@ -11,7 +11,7 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
     const [isSidebarOpen, setSidebarOpen] = useState(false);
-
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     return (
         <div className="flex min-h-screen bg-gray-50 ">
 
@@ -25,7 +25,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 className={`fixed inset-y-0 left-0 z-50 w-[260px] bg-white transform transition-transform duration-300 lg:hidden
                 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
             >
-                <Sidebar />
+                <Sidebar onClose={() => setSidebarOpen(false)} />
             </div>
 
             {/* ================= Overlay ================= */}

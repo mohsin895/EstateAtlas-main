@@ -21,7 +21,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon }) =
 const WhyGlobal: React.FC = () => {
     return (
         <section className="py-24 bg-background">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 pl-[32px] pr-[32px]">
                 <div className="grid lg:grid-cols-2 gap-8 items-stretch">
                     {/* Left Card */}
                     <div className="flex bg-[#0A1532] flex-col justify-between min-h-[400px] rounded-md bg-navy p-10">

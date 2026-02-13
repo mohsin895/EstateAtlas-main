@@ -16,13 +16,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         <div className="flex min-h-screen">
 
             {/* ================= Desktop Sidebar ================= */}
-            <div className="hidden lg:block w-64">
+            <div className="hidden lg:block w-[260px]">
                 <Sidebar />
             </div>
 
             {/* ================= Mobile Sidebar ================= */}
             <div
-                className={`fixed inset-y-0 left-0 z-50 w-64 bg-white transform transition-transform duration-300 lg:hidden
+                className={`fixed inset-y-0 left-0 z-50 w-[260px] bg-white transform transition-transform duration-300 lg:hidden
                 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
             >
                 <Sidebar />

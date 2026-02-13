@@ -30,12 +30,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
     const isActive = (path: string) => pathname === path;
 
     const linkClasses = (path: string) =>
-        `flex items-center gap-3 px-3 py-2.5 rounded-md transition
-     ${
+        `flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors
+   ${
             isActive(path)
                 ? "bg-[#071636] text-white"
-                : "text-dark-gray hover:bg-gray-100"
+                : "text-[#4B5563] hover:bg-gray-100"
         }`;
+
 
     return (
         <aside className="flex flex-col bg-white w-[260px] border-r border-gray-200 fixed h-full">
@@ -56,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 overflow-y-auto p-2 space-y-6">
+                <nav className=" flex-1 overflow-y-auto p-4 space-y-6">
 
                     {/* Main Menu */}
                     <div>

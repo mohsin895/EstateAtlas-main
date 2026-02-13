@@ -152,14 +152,52 @@ function ToggleButton({
 function PriceChart() {
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={priceData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="year" />
-                <YAxis tickFormatter={(v) => `€${v}K`} />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="listing" name="Listing Price" stroke="#3ba1df" strokeWidth={2} dot />
-                <Line type="monotone" dataKey="adjusted" name="Inflation-Adjusted" stroke="#071636" strokeWidth={2} strokeDasharray="5 5" dot />
+            <LineChart data={priceData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis
+                    dataKey="year"
+                    tick={{ fill: '#6b7280', fontSize: 12 }}
+                    axisLine={{ stroke: '#e5e7eb' }}
+                />
+                <YAxis
+                    domain={[0, 600]}
+                    ticks={[0, 150, 300, 450, 600]}
+                    tickFormatter={(v) => `€${v}K`}
+                    tick={{ fill: '#6b7280', fontSize: 12 }}
+                    axisLine={{ stroke: '#e5e7eb' }}
+                />
+                <Tooltip
+                    contentStyle={{
+                        backgroundColor: 'white',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '6px',
+                        fontSize: '12px'
+                    }}
+                    formatter={(value: any) => `€${value}K`}
+                />
+                <Legend
+                    wrapperStyle={{ fontSize: '12px' }}
+                    iconType="line"
+                />
+                <Line
+                    type="monotone"
+                    dataKey="listing"
+                    name="Listing Price"
+                    stroke="#3ba1df"
+                    strokeWidth={2}
+                    dot={{ fill: '#3ba1df', r: 5, strokeWidth: 0 }}
+                    activeDot={{ r: 5 }}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="adjusted"
+                    name="Inflation-Adjusted"
+                    stroke="#071636"
+                    strokeWidth={2}
+                    strokeDasharray="5 5"
+                    dot={{ fill: '#071636', r: 5, strokeWidth: 0 }}
+                    activeDot={{ r: 5 }}
+                />
             </LineChart>
         </ResponsiveContainer>
     );
@@ -168,14 +206,52 @@ function PriceChart() {
 function RentChart() {
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={rentData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="year" />
-                <YAxis tickFormatter={(v) => `€${v}`} />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="nominal" name="Nominal Rent" stroke="#3ba1df" strokeWidth={2} dot />
-                <Line type="monotone" dataKey="adjusted" name="Inflation-Adjusted" stroke="#071636" strokeWidth={2} strokeDasharray="5 5" dot />
+            <LineChart data={rentData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis
+                    dataKey="year"
+                    tick={{ fill: '#6b7280', fontSize: 12 }}
+                    axisLine={{ stroke: '#e5e7eb' }}
+                />
+                <YAxis
+                    domain={[0, 2000]}
+                    ticks={[0, 500, 1000, 1500, 2000]}
+                    tickFormatter={(v) => `€${v.toLocaleString()}`}
+                    tick={{ fill: '#6b7280', fontSize: 12 }}
+                    axisLine={{ stroke: '#e5e7eb' }}
+                />
+                <Tooltip
+                    contentStyle={{
+                        backgroundColor: 'white',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '6px',
+                        fontSize: '12px'
+                    }}
+                    formatter={(value: any) => `€${value}`}
+                />
+                <Legend
+                    wrapperStyle={{ fontSize: '12px' }}
+                    iconType="line"
+                />
+                <Line
+                    type="monotone"
+                    dataKey="nominal"
+                    name="Nominal Rent"
+                    stroke="#3ba1df"
+                    strokeWidth={2}
+                    dot={{ fill: '#3ba1df', r: 5, strokeWidth: 0 }}
+                    activeDot={{ r: 5 }}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="adjusted"
+                    name="Inflation-Adjusted"
+                    stroke="#071636"
+                    strokeWidth={2}
+                    strokeDasharray="5 5"
+                    dot={{ fill: '#071636', r: 5, strokeWidth: 0 }}
+                    activeDot={{ r: 5 }}
+                />
             </LineChart>
         </ResponsiveContainer>
     );

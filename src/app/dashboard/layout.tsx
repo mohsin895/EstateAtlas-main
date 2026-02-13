@@ -13,7 +13,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen bg-gray-50 ">
 
             {/* ================= Desktop Sidebar ================= */}
             <div className="hidden lg:block w-[260px]">

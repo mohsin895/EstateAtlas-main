@@ -13,7 +13,7 @@ import {
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useUser } from "@/app/context/UserContext";
 import man from "../../public/man1.png";
 
@@ -52,8 +52,8 @@ const Navbar: React.FC = () => {
 
     const mobileNavClass = (path: string): string =>
         isActive(path)
-            ? "text-[#3baade] font-bold"
-            : "text-white hover:text-[#3baade]";
+            ? "text-[#3baade] font-medium"
+            : "transition-colors font-medium px-2 py-2 text-primary-foreground/80 hover:text-primary-foreground";
 
     return (
         <nav
@@ -128,19 +128,62 @@ const Navbar: React.FC = () => {
                         onClick={() => setMenuOpen((prev) => !prev)}
                         aria-label="Toggle menu"
                     >
-                        ☰
+                        {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </button>
                 </div>
 
                 {/* Mobile Navigation */}
                 {menuOpen && (
-                    <div className="lg:hidden space-y-2 pb-4">
-                        <Link href="/" className={`block font-semibold ${mobileNavClass("/")}`}>Home</Link>
-                        <Link href="/about" className={`block font-semibold ${mobileNavClass("/about")}`}>About</Link>
-                        <Link href="/pricing" className={`block font-semibold ${mobileNavClass("/pricing")}`}>Pricing</Link>
-                        <Link href="/articles" className={`block font-semibold ${mobileNavClass("/articles")}`}>Market Insights</Link>
-                        <Link href="/contact" className={`block font-semibold ${mobileNavClass("/contact")}`}>Contact</Link>
+                    <div className="lg:hidden bg-[#0a1532] border-t border-primary-foreground/10 py-4">
+                        <div className="lg:hidden space-y-2 p-4 pb-4">
+                            <Link href="/" className={`block font-semibold ${mobileNavClass("/")}`}>Home</Link>
+                            <Link href="/about"
+                                  className={`block font-semibold ${mobileNavClass("/about")}`}>About</Link>
+                            <Link href="/pricing"
+                                  className={`block font-semibold ${mobileNavClass("/pricing")}`}>Pricing</Link>
+                            <Link href="/articles" className={`block font-semibold ${mobileNavClass("/articles")}`}>Market
+                                Insights</Link>
+                            <Link href="/contact"
+                                  className={`block font-semibold ${mobileNavClass("/contact")}`}>Contact</Link>
+                        </div>
+                        {user ? (
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" className="flex items-center gap-2">
+                                        <div className="relative h-10 w-10 rounded-full overflow-hidden">
+                                            <Image src={man} alt="User Avatar" width={40} height={40} className="object-cover" />
+                                        </div>
+                                        <ChevronDown className="h-4 w-4 text-gray-400" />
+                                    </Button>
+                                </DropdownMenuTrigger>
+
+                                <DropdownMenuContent align="end" className="w-56">
+                                    <DropdownMenuLabel>{user.first_name}</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/dashboard/Countries">Dashboard</Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        ) : (
+                        <div className="flex flex-col gap-2 pt-4 border-t border-primary-foreground/10">
+
+                            <a
+                            href="/auth/login">
+                            <button
+                                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:text-accent-foreground h-10 px-4 py-2 w-full text-primary-foreground bg-transparent border border-primary-foreground/30 hover:bg-primary-foreground/10">Log
+                                In
+                            </button>
+                        </a><a href="/auth/register">
+                            <button
+                                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-10 px-4 py-2 w-full bg-[#4CB0DF] hover:bg-sky/90 text-primary font-semibold">Get
+                                Started
+                            </button>
+                        </a>
+                        </div>
+                            )}
                     </div>
+
                 )}
             </div>
         </nav>

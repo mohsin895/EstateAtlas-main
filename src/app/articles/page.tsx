@@ -125,8 +125,8 @@ const Articles = () => {
       <Navbar />
 
       <div className="min-h-screen mb-5  ">
-          <section className="bg-[#0a1532] pt-32 pb-16 ">
-              <div className="container mx-auto text-center">
+          <section className="bg-[#0a1532] pt-32 pb-16 p-4  ">
+              <div className="container mx-auto text-center pl-[32px] pr-[32px]">
                   {/* Heading */}
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-balance">
                       Global Market Intelligence
@@ -192,8 +192,8 @@ const Articles = () => {
                   </div>
               </div>
           </section>
-          <section className="py-12 md:py-16 px-4 bg-muted/30">
-              <div className="container mx-auto">
+          <section className="py-12 md:py-16 px-4 bg-[#e6e6e64d]">
+              <div className="container mx-auto pl-[32px] pr-[32px]">
                   <div className="bg-card rounded-2xl overflow-hidden shadow-xl border border-border">
                       <div className="grid md:grid-cols-2">
                           <div className="aspect-video md:aspect-auto">
@@ -225,7 +225,7 @@ const Articles = () => {
           </section>
 
           <section className="py-12 md:py-16 px-4">
-              <div className="container mx-auto">
+              <div className="container mx-auto pl-[32px] pr-[32px]">
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                       {articles.map((article, index) => (
                           <article

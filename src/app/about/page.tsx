@@ -29,7 +29,7 @@ const About = () => {
                 <div className="absolute inset-0 bg-[#0A1532]/80"></div>
 
                 {/* Content */}
-                <div className="container relative z-10 flex flex-col items-center justify-center text-left pt-20 pb-24">
+                <div className="container pl-[32px] pr-[32px] relative z-10 flex flex-col items-center justify-center text-left pt-20 pb-24">
                     <div className="border-l-4 border-[#3BAADD] pl-6 max-w-5xl mx-auto">
                         <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-primary-foreground leading-tight mb-8">
                             The New Standard In International Real Estate Data
@@ -66,8 +66,8 @@ const About = () => {
             </section>
 
             <section className="bg-background py-20 md:py-28">
-                <div className="container max-w-4xl mx-auto text-left">
-                    <h2 className="font-heading text-3xl md:text-4xl text-navy mb-8 text-center text-balance">
+                <div className="container max-w-4xl mx-auto pl-[32px] pr-[32px] text-left">
+                    <h2 className="font-heading text-3xl md:text-4xl text-[#071636] mb-8 text-center text-balance">
                         Bridging the Information Gap
                     </h2>
                     <div className="font-sans text-dark-gray text-lg leading-relaxed space-y-6">
@@ -85,8 +85,8 @@ const About = () => {
             </section>
 
             <section className="bg-[#E5E5E5] py-20 md:py-28">
-                <div className="container mx-auto px-4 ">
-                    <h2 className="font-heading text-3xl md:text-4xl text-navy text-center mb-16">
+                <div className="container mx-auto px-4 pl-[32px] pr-[32px] ">
+                    <h2 className="font-heading text-3xl md:text-4xl text-[#071636] text-center mb-16">
                         Our Core Values
                     </h2>
 

@@ -118,7 +118,7 @@ const Pricing = () => {
                         </div>
 
                         {/* Premium Card */}
-                        <div className="rounded-lg bg-card text-card-foreground relative flex flex-col border-[#3CABDD] border-2 shadow-xl scale-105 z-10">
+                        <div className="rounded-lg bg-card text-card-foreground relative flex flex-col border-[#3CABDD] mt-4 lg:mt-[0px] border-2 shadow-xl scale-105 z-10">
                             <div className="inline-flex items-center rounded-full border border-transparent text-xs font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-[#379BCD] text-white px-4 py-1 absolute -top-3 left-1/2 -translate-x-1/2 hover:bg-[#071636cc]">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

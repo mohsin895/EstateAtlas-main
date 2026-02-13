@@ -189,3 +189,8 @@ body {
 
 .card-singapore { right: 15%; top: 46%; }
 .card-singapore .card-connector { height: 30px; top: 100%; left: 30%; }
+
+.font-heading {
+    font-family: Poppins, sans-serif;
+    font-weight: 700;
+}

@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
     return (
         <footer id="contact" className="bg-[#0A1532] py-16">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 pl-[32px] pr-[32px]">
                 {/* CTA Section */}
                 <div className="text-center mb-12 pb-12 border-b border-primary-foreground/10">
                     <h2 className="font-heading text-2xl md:text-3xl text-primary-foreground mb-4">
@@ -49,7 +49,7 @@ const Footer = () => {
                     </div>
 
                     {/* Second Column: Company Links (Center) */}
-                    <div className="justify-self-center text-left">
+                    <div className="lg:justify-self-center text-left">
                         <h4 className="font-heading text-primary-foreground mb-4">Company</h4>
                         <ul className="space-y-2">
                             <li><a href="#about" className="text-primary-foreground/60 hover:text-primary-foreground text-sm">About Us</a></li>
@@ -60,7 +60,7 @@ const Footer = () => {
                     </div>
 
                     {/* Third Column: Legal Links (Right) */}
-                    <div className="justify-self-center text-left">
+                    <div className="lg:justify-self-center text-left">
                         <h4 className="font-heading text-primary-foreground mb-4">Legal</h4>
                         <ul className="space-y-2">
                             <li><a href="#" className="text-primary-foreground/60 hover:text-primary-foreground text-sm">Terms of Service</a></li>
